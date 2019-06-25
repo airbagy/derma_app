@@ -97,7 +97,8 @@ public abstract class Classifier {
     if (model == Model.QUANTIZED) {
       return new ClassifierQuantizedMobileNet(activity, device, numThreads);
     } else {
-      return new ClassifierFloatMobileNet(activity, device, numThreads);
+//      return new ClassifierFloatMobileNet(activity, device, numThreads);
+      return new ClassifierSkinDetNet(activity, device, numThreads);
     }
   }
 
