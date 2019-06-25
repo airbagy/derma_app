@@ -319,4 +319,22 @@
             android:entries="@array/devices"
             android:prompt="@string/device" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:onClick="classifierBackToMainMenu"
+            android:text="Back to Main Menu"/>
+    </RelativeLayout>
 </LinearLayout>

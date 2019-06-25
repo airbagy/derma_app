@@ -16,6 +16,7 @@
 
 package org.tensorflow.lite.examples.classification;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -25,6 +26,7 @@ import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
 import android.util.Size;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
@@ -168,5 +170,10 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     } catch (IOException e) {
       LOGGER.e(e, "Failed to create classifier.");
     }
+  }
+
+  public void classifierBackToMainMenu(View v) {
+    Intent intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
   }
 }

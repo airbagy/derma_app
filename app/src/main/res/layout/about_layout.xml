@@ -8,7 +8,7 @@
         android:id="@+id/welcome_message_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#036e64"
+        android:background="#7eaec1"
         android:orientation="vertical"
         android:layout_margin="16dp"
         android:padding="16dp"
@@ -16,34 +16,25 @@
 
         <TextView
             android:id="@+id/welcome_title"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:text="Welcome to Project Derma"
+            android:text="Project Derma"
+            android:gravity="center"
             android:textColor="#ddd"
             android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_below="@+id/welcome_title"
-            android:text="Welcome to Project Derma! Our app gives you a preliminary check on the condition of a mole to indiciate the possibility of skin cancer."
-            android:textColor="#ddd"
-            android:textSize="18sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="#3b978d"
-            android:onClick="mainGotoAbout"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="About"
-            android:textColor="#fff" />
+            android:text="Stephen Lau\nLishi Wang\nDennis Duan\nOmar Qadri"
+            android:textColor="#760101"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -51,11 +42,11 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="bottom"
-            android:background="#3b978d"
-            android:onClick="dismissWelcomeMessageBox"
+            android:background="#517897"
+            android:onClick="aboutBackToMainMenu"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="Got It"
+            android:text="Back to Main Menu"
             android:textColor="#fff" />
     </RelativeLayout>
 </RelativeLayout>

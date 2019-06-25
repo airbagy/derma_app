@@ -29,6 +29,9 @@
         <activity android:name=".ClassifierActivity">
         </activity>
 
+        <activity android:name=".AboutActivity">
+        </activity>
+
     </application>
 
 

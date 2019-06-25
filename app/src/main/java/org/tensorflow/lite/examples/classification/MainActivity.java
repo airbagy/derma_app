@@ -20,4 +20,9 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void mainGotoAbout(View v) {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
 }
