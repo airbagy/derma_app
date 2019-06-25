@@ -22,8 +22,8 @@ import java.io.IOException;
 public class ClassifierSkinDetNet extends Classifier {
 
     /** MobileNet requires additional normalization of the used input. */
-    private static final float IMAGE_MEAN = 0f;
-    private static final float IMAGE_STD = 1f;
+    private static final float IMAGE_MEAN = 159.88f;
+    private static final float IMAGE_STD = 46.75f;
 
     /**
      * An array to hold inference results, to be feed into Tensorflow Lite as outputs. This isn't part
