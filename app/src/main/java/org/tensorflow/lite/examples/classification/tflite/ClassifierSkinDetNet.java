@@ -57,7 +57,7 @@ public class ClassifierSkinDetNet extends Classifier {
         // you can download this file from
         // see build.gradle for where to obtain this file. It should be auto
         // downloaded into assets.
-        return "";
+        return "skindetnet.tflite";
     }
 
     @Override
