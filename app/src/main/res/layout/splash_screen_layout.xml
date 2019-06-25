@@ -12,17 +12,13 @@
         android:textStyle="bold"
         android:gravity="center_horizontal"
         android:textColor="#fff"
-        android:text="Splash Screen Example in Android"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/viral_android_icon" />
+        android:text="Project Derma"/>
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:text="Learn Android App Development at ViralAndroid.com"
+        android:text="Stephen Lau\nLishi Wang\nDennis Duan\nOmar Qadri"
         android:textColor="#760101"
         android:textSize="20sp"
         android:textStyle="bold" />

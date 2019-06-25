@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="16dp"
-            android:text="Welcome to ViralAndroid"
+            android:text="Welcome to Project Derma"
             android:textColor="#ddd"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -57,24 +57,12 @@
         android:padding="20dp"
         android:visibility="invisible">
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/android_ic" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Project Derma Android Application"
             android:textColor="#fff"
             android:textSize="25sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="ViralAndroid.com"
-            android:textSize="30sp" />
 
     </LinearLayout>
 </RelativeLayout>
