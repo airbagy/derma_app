@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcome_title"
-            android:text="Here you will learn to develop profession android application with our tutorials, examples, tips and tricks, ux/ui design etc. These all tutorial and examples are available at free of cost. \n\nEither you are beginner or expert android developer we provide best tutorial and examples to you."
+            android:text="Welcome to Project Derma! Our app gives you a preliminary check on the condition of a mole to indiciate the possibility of skin cancer."
             android:textColor="#ddd"
             android:textSize="18sp" />
 
@@ -65,7 +65,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome Message For Android Application with Source Code. Welcome Message For Android Application with Source Code"
+            android:text="Project Derma Android Application"
             android:textColor="#fff"
             android:textSize="25sp" />
 
