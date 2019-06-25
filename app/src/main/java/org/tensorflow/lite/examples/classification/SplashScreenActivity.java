@@ -1,5 +1,4 @@
-
-package viralandroid.com.androidsplashscreen;
+package org.tensorflow.lite.examples.classification;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ClassifierActivity"
+            android:name=".MainActivity"
             android:label="@string/activity_name_classification"
             android:screenOrientation="portrait">
             <intent-filter>
