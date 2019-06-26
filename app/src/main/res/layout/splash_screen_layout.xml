@@ -22,4 +22,14 @@
         android:textColor="#760101"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:text="By using this app, you are agreeing that you understand the app does not represent a diagnosis and that you understand all results are not proper diagnosis."
+        android:textColor="#760101"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
 </LinearLayout>
