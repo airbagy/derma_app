@@ -12,10 +12,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_message_android);
+        setContentView(R.layout.main_menu);
     }
 
-    public void dismissWelcomeMessageBox(View v) {
+    public void activateCamera(View v) {
         Intent intent = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
     }
@@ -23,6 +23,12 @@ public class MainActivity extends Activity {
     public void mainGotoAbout(View v) {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
+    }
+
+    public void accessLibrary(View v){
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 0);
     }
 
 }
