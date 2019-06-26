@@ -9,8 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/derma_project_bg"
+        android:alpha="0.8"
         android:orientation="vertical"
-        android:layout_margin="16dp"
         android:padding="16dp"
         android:visibility="visible">
 
@@ -23,7 +23,7 @@
             android:fontFamily="casual"
             android:text="Welcome to Project Derma"
             android:gravity="center"
-            android:textColor="#ddd"
+            android:textColor="#fff"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="casual"
             android:layout_below="@+id/welcome_title"
-            android:text="Welcome to Project Derma! Our app gives you a preliminary check on the condition of a mole to indiciate the possibility of skin cancer."
-            android:textColor="#ddd"
+            android:text="Our app gives you a preliminary check on the condition of a mole to indiciate the possibility of skin cancer."
+            android:textColor="#fff"
             android:textSize="18sp" />
 
         <Button
@@ -41,11 +41,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:background="#3b978d"
+            android:background="@drawable/round_btn"
+            android:fontFamily="casual"
             android:onClick="mainGotoAbout"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:fontFamily="casual"
             android:text="About"
             android:textColor="#fff" />
 
@@ -56,7 +56,7 @@
             android:fontFamily="casual"
             android:layout_alignParentRight="true"
             android:layout_gravity="bottom"
-            android:background="#3b978d"
+            android:background="@drawable/round_btn"
             android:onClick="dismissWelcomeMessageBox"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"

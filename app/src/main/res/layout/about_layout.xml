@@ -11,8 +11,8 @@
         android:layout_height="fill_parent"
         android:background="@drawable/derma_project_bg"
         android:orientation="vertical"
-        android:layout_margin="16dp"
         android:padding="16dp"
+        android:alpha="0.8"
         android:visibility="visible">
 
         <TextView
@@ -23,7 +23,8 @@
             android:layout_marginTop="16dp"
             android:text="Project Derma"
             android:gravity="center"
-            android:textColor="#ddd"
+            android:fontFamily="casual"
+            android:textColor="#ffffff"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -31,10 +32,10 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_below="@+id/welcome_title"
-            android:text="Stephen Lau\nLishi Wang\nDennis Duan\nOmar Qadri"
-            android:textColor="#760101"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:text="By using this app, you are agreeing that you understand the app does not represent a diagnosis and that you understand all results are not proper diagnosis.\n\n\nStephen Lau\nLishi Wang\nDennis Duan\nOmar Qadri"
+            android:textColor="#ffffff"
+            android:fontFamily="casual"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"/>
     </RelativeLayout>
 </RelativeLayout>
