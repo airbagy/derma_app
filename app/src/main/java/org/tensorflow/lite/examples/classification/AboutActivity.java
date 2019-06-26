@@ -15,9 +15,4 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.about_layout);
     }
 
-    public void aboutBackToMainMenu(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
 }
