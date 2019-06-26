@@ -171,9 +171,4 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
       LOGGER.e(e, "Failed to create classifier.");
     }
   }
-
-  public void classifierBackToMainMenu(View v) {
-    Intent intent = new Intent(this, MainActivity.class);
-    startActivity(intent);
-  }
 }
