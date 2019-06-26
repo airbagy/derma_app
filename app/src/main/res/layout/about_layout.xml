@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/welcome_message_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#7eaec1"
+        android:background="@drawable/derma_project_bg"
         android:orientation="vertical"
         android:layout_margin="16dp"
         android:padding="16dp"
