@@ -31,4 +31,9 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, 0);
     }
 
+    public void activateInfoPage(View v){
+        Intent intent = new Intent(this, InfoPageActivity.class);
+        startActivity(intent);
+    }
+
 }
