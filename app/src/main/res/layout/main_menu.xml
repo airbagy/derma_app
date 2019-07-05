@@ -69,6 +69,33 @@
             android:src="@drawable/map_icon" />
 
 
+        <ImageButton
+            android:id="@+id/sharing_button"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/map_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="-92dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sharing_icon" />
+
+        <ImageButton
+            android:id="@+id/recommendation_button"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sharing_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="-101dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/info_icon" />
+
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
