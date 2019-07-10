@@ -27,6 +27,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void accessSharing(View v){
+        Intent intent = new Intent(this, SharingActivity.class);
+        startActivity(intent);
+    }
+
     public void accessLibrary(View v){
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

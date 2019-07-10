@@ -83,6 +83,7 @@
             android:layout_marginBottom="-92dp"
             android:adjustViewBounds="true"
             android:background="@null"
+            android:onClick="accessSharing"
             android:scaleType="fitCenter"
             android:src="@drawable/sharing_icon" />
 

@@ -40,6 +40,9 @@
         <activity android:name=".MainActivity">
         </activity>
 
+        <activity android:name=".SharingActivity">
+        </activity>
+
     </application>
 
 
