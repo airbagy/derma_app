@@ -39,7 +39,7 @@
             android:layout_marginEnd="155dp"
             android:adjustViewBounds="true"
             android:background="@null"
-            android:onClick="activateCamera"
+            android:onClick="processCameraImage"
             android:scaleType="fitCenter"
             android:src="@drawable/camera_icon2" />
 
