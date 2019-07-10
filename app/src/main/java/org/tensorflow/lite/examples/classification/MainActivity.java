@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 import android
 >>>>>>> implement picture fetch
+=======
+import android.widget.ImageView;
+>>>>>>> Implement image select
 
 public class MainActivity extends Activity {
+
+    public static final int GALLERY_REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +43,11 @@ public class MainActivity extends Activity {
         intent.setType("image/*");
         String[] mimetypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-        startActivityForResult(intent, 0);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public void accessMaps(View v) {
         // Create a Uri from an intent string. Use the result to create an Intent.
@@ -55,23 +63,19 @@ public class MainActivity extends Activity {
 =======
     public void onActivityResult(int requestCode,int resultCode,Intent data){
         // Result code is RESULT_OK only if the user selects an Image
+=======
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+>>>>>>> Implement image select
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode){
                 case GALLERY_REQUEST_CODE:
-                    //data.getData return the content URI for the selected Image
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = { android.provider.MediaStore.Images.Media.DATA };
-                    // Get the cursor
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    // Move to first row
-                    cursor.moveToFirst();
-                    //Get the column index of MediaStore.Images.Media.DATA
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    //Gets the String value in the column
-                    String imgDecodableString = cursor.getString(columnIndex);
-                    cursor.close();
-                    // Set the Image in ImageView after decoding the String
-                    imageView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
+                    if(data.getData() != null){
+                        Uri imageURI = data.getData();
+
+                        Intent intent = new Intent(this, ClassifierActivity.class);
+                        intent.putExtra("imageURI", imageURI.toString());
+                        startActivity(intent);
+                    }
                     break;
 
             }
