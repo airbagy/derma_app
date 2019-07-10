@@ -13,7 +13,6 @@
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
@@ -40,6 +39,5 @@ local.properties
 .idea/
 app/build/
 
-!gradle-wrapper.jar
 *.iml
 

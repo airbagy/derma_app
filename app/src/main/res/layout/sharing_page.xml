@@ -6,4 +6,91 @@
     android:alpha="0.8"
     android:background="@drawable/derma_project_bg">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sharing"/>
+
+        <EditText
+            android:id="@+id/send_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="email address"/>
+
+        <EditText
+            android:id="@+id/send_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="subject"/>
+
+        <EditText
+            android:id="@+id/send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="message"/>
+
+        <EditText
+            android:id="@+id/send_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="code"/>
+
+        <Button
+            android:id="@+id/send_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="sendAction"
+            android:text="Send"/>
+
+        <TextView
+            android:id="@+id/send_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No result"/>
+
+        <EditText
+            android:id="@+id/recv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="email address"/>
+
+        <EditText
+            android:id="@+id/recv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="password"/>
+
+        <EditText
+            android:id="@+id/recv_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="subject"/>
+
+        <EditText
+            android:id="@+id/recv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="code"/>
+
+        <Button
+            android:id="@+id/recv_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="recvAction"
+            android:text="Receive"/>
+
+        <TextView
+            android:id="@+id/recv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No result"/>
+    </LinearLayout>
 </RelativeLayout>
