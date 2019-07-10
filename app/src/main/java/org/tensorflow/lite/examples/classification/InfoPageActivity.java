@@ -16,13 +16,6 @@ public class InfoPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info_page);
 
-        //Spinner spinner = (Spinner) findViewById(R.id.spinner);
     }
-
-    public void consentAction(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
 
 }
