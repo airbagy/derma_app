@@ -6,16 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
-import android
->>>>>>> implement picture fetch
-=======
-import android.widget.ImageView;
->>>>>>> Implement image select
 
 public class MainActivity extends Activity {
 
@@ -47,8 +37,6 @@ public class MainActivity extends Activity {
         startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public void accessMaps(View v) {
         // Create a Uri from an intent string. Use the result to create an Intent.
         Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
@@ -60,16 +48,13 @@ public class MainActivity extends Activity {
 
 // Attempt to start an activity that can handle the Intent
         startActivity(mapIntent);
-=======
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        // Result code is RESULT_OK only if the user selects an Image
-=======
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data){
->>>>>>> Implement image select
-        if (resultCode == Activity.RESULT_OK)
-            switch (requestCode){
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
-                    if(data.getData() != null){
+                    if (data.getData() != null) {
                         Uri imageURI = data.getData();
 
                         Intent intent = new Intent(this, ClassifierActivity.class);
@@ -79,7 +64,7 @@ public class MainActivity extends Activity {
                     break;
 
             }
->>>>>>> implement picture fetch
+        }
     }
 
     public void activateInfoPage(View v){
