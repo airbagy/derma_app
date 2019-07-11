@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.security.*;
 import java.util.Properties;
 import javax.mail.*;
 import javax.crypto.*;
+import javax.crypto.spec.*;
 
 
 public class SharingActivity extends Activity {
@@ -74,27 +76,44 @@ public class SharingActivity extends Activity {
     }
 
     private String encodeString(String str, String code) {
-        // add encryption as well
-        return encodeString64(str);
+        try {
+            Key key = generateKey(code);
+            Cipher c = Cipher.getInstance("AES");
+            c.init(Cipher.ENCRYPT_MODE, key);
+            byte[] encValue = c.doFinal(str.getBytes());
+            return encodeString64(encValue);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private String decodeString(String str, String code) {
-        // add decryption as well
-        return decodeString64(str);
+        try {
+            Key key = generateKey(code);
+            Cipher c = Cipher.getInstance("AES");
+            c.init(Cipher.DECRYPT_MODE, key);
+            byte[] decodedValue = decodeString64(str);
+            byte[] decValue = c.doFinal(decodedValue);
+            String decryptedValue = new String(decValue);
+            return decryptedValue;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    private String encodeString64(String str) {
-        try {
-            Base64.encodeToString(str.getBytes("UTF-8"), Base64.DEFAULT);
-        } catch (Exception e) {}
-        return null;
+    private static Key generateKey(String code) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] keyBytes = sha.digest(code.getBytes("UTF-8"));
+        Key key = new SecretKeySpec(keyBytes, "AES");
+        return key;
     }
 
-    private String decodeString64(String str) {
-        try {
-            return new String(Base64.decode(str, Base64.DEFAULT), "UTF-8");
-        } catch (Exception e) {}
-        return null;
+    private String encodeString64(byte[] bytes) {
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    private byte[] decodeString64(String str) {
+        return Base64.decode(str, Base64.DEFAULT);
     }
 
     private String recvEmail(String address, String password, String subject) throws Exception {
