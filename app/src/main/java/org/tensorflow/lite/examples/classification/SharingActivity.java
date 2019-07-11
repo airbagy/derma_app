@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.security.*;
+import java.util.Arrays;
 import java.util.Properties;
 import javax.mail.*;
 import javax.crypto.*;
@@ -104,6 +105,7 @@ public class SharingActivity extends Activity {
     private static Key generateKey(String code) throws Exception {
         MessageDigest sha = MessageDigest.getInstance("SHA-1");
         byte[] keyBytes = sha.digest(code.getBytes("UTF-8"));
+        keyBytes = Arrays.copyOf(keyBytes, 16);
         Key key = new SecretKeySpec(keyBytes, "AES");
         return key;
     }
