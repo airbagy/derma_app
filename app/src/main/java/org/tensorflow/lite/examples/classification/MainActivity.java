@@ -3,12 +3,16 @@ package org.tensorflow.lite.examples.classification;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import android.graphics.Bitmap;
 import java.io.BufferedInputStream;
@@ -44,14 +48,36 @@ public class MainActivity extends Activity {
     public static final int CAMERA_REQUEST_CODE = 1;
     private static final Logger LOGGER = new Logger();
     private Classifier classifier;
-    private Model model = Model.QUANTIZED;
+    private Model model = Model.FLOAT;
     private Device device = Device.CPU;
     private int numThreads = -1;
 
+    private Bitmap convertBitmap(Bitmap bitmap){
+        Bitmap converted = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas();
+        canvas.setBitmap(converted);
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        return converted;
+    }
+
     protected void processImage(Bitmap image) {
         recreateClassifier(model, device, numThreads);
-        Bitmap croppedBitmap = Bitmap.createScaledBitmap(image,
-                classifier.getImageSizeX(), classifier.getImageSizeY(), false);
+        Bitmap croppedBitmap = Bitmap.createBitmap(
+                classifier.getImageSizeX(), classifier.getImageSizeY(), Config.ARGB_8888);
+        Matrix frameToCropTransform = ImageUtils.getTransformationMatrix(
+                image.getWidth(),
+                image.getHeight(),
+                classifier.getImageSizeX(),
+                classifier.getImageSizeY(),
+                0,
+                true);
+        Matrix cropToFrameTransform = new Matrix();
+        frameToCropTransform.invert(cropToFrameTransform);
+        Canvas canvas = new Canvas(croppedBitmap);
+        canvas.drawBitmap(image, frameToCropTransform, null);
+
         System.out.println("ProcessImage");
         if (classifier != null) {
             final long startTime = SystemClock.uptimeMillis();
@@ -102,15 +128,16 @@ public class MainActivity extends Activity {
 
     public void accessLibrary(View v){
         Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        String[] mimetypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+//        String[] mimetypes = {"image/jpeg", "image/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
     }
 
-    private void processCameraImage(View v) {
+    public void processCameraImage(View v) {
+
         Intent cameraIntent = new
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
@@ -124,30 +151,31 @@ public class MainActivity extends Activity {
                     System.out.println(data.getData());
                     if (data.getData() != null) {
                         Uri imageURI = data.getData();
-                        URI imageJURI = URI.create(imageURI.toString());
-                        System.out.println(imageURI);
-                        try{
-                            Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                            System.out.println(imageBitmap.getWidth());
-                            System.out.println(imageBitmap.getHeight());
-                            //Intent intent = new Intent(this, ImageClassifierActivity.class);
-                            //intent.putExtra("bitmap", imageBitmap);
-                           // startActivity(intent);
-                            processImage(imageBitmap);
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
+                            processImage(bitmap);
                         }
-                        catch (IOException e) {
+                        catch (Exception e){
                             System.out.println("Cannot process image");
                         }
+//                        String path = null;
+//                        String [] files = {MediaStore.MediaColumns.DATA};
+//                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
+//                        if (cursor.moveToFirst()) {
+//                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//                           path = cursor.getString(column_index);
+//                        }
+//                        BitmapFactory.Options options = new BitmapFactory.Options();
+//                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+//                        processImage(bitmap);
+//                        cursor.close();
                     }
                     break;
 
                 case CAMERA_REQUEST_CODE:
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-
-                    //Starting activity (ImageViewActivity in my code) to preview image
-                    Intent intent = new Intent(this, ImageClassifierActivity.class);
-                    intent.putExtra("bitmap", photo);
-                    startActivity(intent);
+                    processImage(photo);
             }
         }
     }
