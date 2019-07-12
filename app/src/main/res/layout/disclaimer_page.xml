@@ -43,18 +43,17 @@
             android:padding="10dp"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:layout_width="83dp"
+            android:layout_height="91dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@drawable/round_btn"
-            android:fontFamily="casual"
+
+            android:adjustViewBounds="true"
+
+            android:background="@null"
             android:onClick="consentAction"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Got It"
-            android:textColor="#fff" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/check" />
     </RelativeLayout>
 </RelativeLayout>

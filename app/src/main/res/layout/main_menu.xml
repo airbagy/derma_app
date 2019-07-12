@@ -16,32 +16,43 @@
 
         <ImageButton
             android:id="@+id/camera_button"
-            android:layout_width="257dp"
-            android:layout_height="176dp"
+            android:layout_width="140dp"
+            android:layout_height="190dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
             android:background="@null"
             android:onClick="activateCamera"
             android:scaleType="fitCenter"
-            android:src="@drawable/camera_icon3" />
+            android:src="@drawable/icon_camera" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/circle_button"
+            android:layout_width="266dp"
+            android:layout_height="198dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="400dp"
-            android:padding="10dp">
+            android:layout_marginTop="200dp"
+            android:background="@null"
+
+            android:onClick="activateCamera"
+            android:scaleType="fitCenter"
+            android:src="@drawable/circle3__1562959607_97606__1562963806_16641" />
 
 
-            <ImageButton
-                android:id="@+id/library_button"
-                android:layout_width="65dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:onClick="accessLibrary"
-                android:src="@drawable/photo_library" />
+        <ImageButton
+            android:id="@+id/library_button"
+            android:layout_width="84dp"
+            android:layout_height="72dp"
+            android:layout_alignLeft="@id/camera_button"
+            android:layout_alignBottom="@id/camera_button"
+            android:layout_marginLeft="-44dp"
+            android:layout_marginBottom="-79dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:onClick="accessLibrary"
+            android:scaleType="fitCenter"
+            android:src="@drawable/photo_library2" />
 
-            <ImageButton
+        <!--<ImageButton
                 android:id="@+id/map_icon"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
@@ -53,22 +64,25 @@
                 android:background="@null"
                 android:onClick="accessMaps"
                 android:scaleType="fitCenter"
-                android:src="@drawable/map_icon" />
+                android:src="@drawable/map_icon" />-->
 
 
-            <ImageButton
-                android:id="@+id/info_button"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/info_button"
+            android:layout_width="84dp"
+            android:layout_height="69dp"
 
-                android:layout_marginBottom="-450dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:onClick="activateInfoPage"
-                android:scaleType="fitCenter"
-                android:src="@drawable/info_icon" />
+            android:layout_alignRight="@id/camera_button"
+            android:layout_alignBottom="@id/camera_button"
+            android:layout_marginRight="-40dp"
+            android:layout_marginBottom="-77dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:onClick="activateInfoPage"
+            android:scaleType="fitCenter"
+            android:src="@drawable/info_icon" />
 
-            <ImageButton
+        <!--<ImageButton
                 android:id="@+id/sharing_button"
                 android:layout_width="65dp"
                 android:layout_height="wrap_content"
@@ -77,24 +91,18 @@
                 android:background="@null"
                 android:onClick="accessSharing"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sharing_icon" />
+                android:src="@drawable/sharing_icon" />-->
 
-        </TableRow>
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="58dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="649dp"
-            android:background="@drawable/round_btn"
-            android:fontFamily="casual"
+        <ImageButton
+            android:layout_width="84dp"
+            android:layout_height="69dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="-71dp"
+
+            android:background="@null"
             android:onClick="mainGotoAbout"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="About"
-            android:textColor="#fff" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/info_icon2" />
     </RelativeLayout>
 </RelativeLayout>
