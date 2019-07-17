@@ -62,8 +62,17 @@ public class MainActivity extends Activity {
         return converted;
     }
 
+    private Bitmap getRGB(Bitmap src){
+        int [] colors = new int[src.getWidth() * src.getHeight()];
+        src.getPixels(colors, 0, src.getWidth(), 0 ,0, src.getWidth(), src.getHeight());
+        Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Config.ARGB_8888);
+        result.setPixels(colors, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
+        return result;
+    }
+
     protected void processImage(Bitmap image) {
         recreateClassifier(model, device, numThreads);
+        Bitmap rgbBitmap = getRGB(image);
         Bitmap croppedBitmap = Bitmap.createBitmap(
                 classifier.getImageSizeX(), classifier.getImageSizeY(), Config.ARGB_8888);
         Matrix frameToCropTransform = ImageUtils.getTransformationMatrix(
@@ -76,7 +85,7 @@ public class MainActivity extends Activity {
         Matrix cropToFrameTransform = new Matrix();
         frameToCropTransform.invert(cropToFrameTransform);
         Canvas canvas = new Canvas(croppedBitmap);
-        canvas.drawBitmap(image, frameToCropTransform, null);
+        canvas.drawBitmap(rgbBitmap, frameToCropTransform, null);
 
         System.out.println("ProcessImage");
         if (classifier != null) {
