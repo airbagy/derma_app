@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -40,4 +47,5 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly'
     // Use local TensorFlow library
     // implementation 'org.tensorflow:tensorflow-lite-local:0.0.0'
+    implementation 'com.github.yalantis:ucrop:2.2.3'
 }
