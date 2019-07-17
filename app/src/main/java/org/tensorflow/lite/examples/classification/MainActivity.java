@@ -12,12 +12,16 @@ import android.util.Log;
 import java.io.File;
 import android.provider.MediaStore;
 import android.database.Cursor;
+import android.os.Build;
+import java.io.IOException;
+import android.os.Environment;
 
 
 
 public class MainActivity extends Activity {
 
     public static final int GALLERY_REQUEST_CODE = 0;
+    private String currentPhotoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +45,21 @@ public class MainActivity extends Activity {
     }
 
     public void accessLibrary(View v){
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        String[] mimetypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
+//        Intent intent = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+//        String[] mimetypes = {"image/jpeg", "image/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
+        Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        pictureIntent.setType("image/*");
+        pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
+            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
+        startActivityForResult(Intent.createChooser(pictureIntent, "Select Picture"), GALLERY_REQUEST_CODE);
     }
 
     public void accessMaps(View v) {
@@ -83,15 +95,23 @@ public class MainActivity extends Activity {
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     if (data.getData() != null) {
-                        Uri imageURI = data.getData();
+                        try {
+                            Uri sourceUri = data.getData();
+                            File file = getImageFile();
+                            Uri destinationUri = Uri.fromFile(file);
+                            openCropActivity(sourceUri, destinationUri);
 
-                        Log.d("imageURI",imageURI.toString());
-//                        File file = new File(getPathFromURI(imageURI));
-//                        if (file.exists()) {
-//                            Log.d("EXISTS",imageURI.toString());
-//                        }
+                            Log.d("imageURI",sourceUri.toString());
+//                            File file = new File(getPathFromURI(imageURI));
+////                            if (file.exists()) {
+////                                Log.d("EXISTS",imageURI.toString());
+////                            }
 
-                        openCropActivity(imageURI, imageURI);
+//                            openCropActivity(sourceUri, sourceUri);
+                        } catch (Exception e) {
+
+                        }
+
 
 //                        Intent intent = new Intent(this, ClassifierActivity.class);
 //                        intent.putExtra("imageURI", imageURI.toString());
@@ -113,6 +133,25 @@ public class MainActivity extends Activity {
         }
         cursor.close();
         return res;
+    }
+
+    private File getImageFile() throws IOException {
+        String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
+        File storageDir = new File(
+                Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DCIM
+                ), "Camera"
+        );
+        System.out.println(storageDir.getAbsolutePath());
+        if (storageDir.exists())
+            System.out.println("File exists");
+        else
+            System.out.println("File not exists");
+        File file = File.createTempFile(
+                imageFileName, ".jpg", storageDir
+        );
+        currentPhotoPath = "file:" + file.getAbsolutePath();
+        return file;
     }
 
 }
