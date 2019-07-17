@@ -124,7 +124,6 @@ public class MainActivity extends Activity {
             LOGGER.e(e, "Failed to create classifier.");
         }
     }
->>>>>>> backend_build
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
