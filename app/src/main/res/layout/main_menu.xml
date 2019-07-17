@@ -21,7 +21,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
             android:background="@null"
-            android:onClick="activateCamera"
+            android:onClick="processCameraImage"
             android:scaleType="fitCenter"
             android:src="@drawable/icon_camera" />
 
