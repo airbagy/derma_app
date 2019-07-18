@@ -6,12 +6,6 @@ import android.net.Uri;
 import java.lang.String;
 import android.provider.MediaStore;
 
-enum STAGE {
-    ORIGINAL,
-    CROPPED,
-    NV_ClASSIFIED,
-    CLASSIFIED
-}
 
 public class ResultModel {
 
@@ -21,10 +15,10 @@ public class ResultModel {
     private Dictionary result = null;
     private Bitmap img_org = null;
     private Bitmap img_cropped = null;
-    private STAGE stage = STAGE.ORIGINAL;
+    private Stage stage = Stage.ORIGINAL;
 
 
-    public STAGE returnCurState()
+    public Stage returnCurState()
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
@@ -101,7 +95,7 @@ public class ResultModel {
         result = null;
         img_org = null;
         img_cropped = null;
-        stage = STAGE.ORIGINAL;
+        stage = Stage.ORIGINAL;
     }
 
     public ResultModel getInstance()  throws IllegalStateException
@@ -130,7 +124,7 @@ public class ResultModel {
         {
             uri_org = null;
             img_org = null;
-            stage = STAGE.ORIGINAL;
+            stage = Stage.ORIGINAL;
             throw e;
         }
 
@@ -147,12 +141,12 @@ public class ResultModel {
         try {
             uri_cropped = cropped_uri;
             img_cropped = cropped_img;
-            stage = STAGE.CROPPED;
+            stage = Stage.CROPPED;
             return true;
         } catch (Exception e) {
             uri_cropped = null;
             img_cropped = null;
-            stage = STAGE.ORIGINAL;
+            stage = Stage.ORIGINAL;
             throw e;
         }
     }
@@ -166,11 +160,11 @@ public class ResultModel {
 
         try {
             result = fstage_result;
-            stage = STAGE.NV_ClASSIFIED;
+            stage = Stage.NV_ClASSIFIED;
             return true;
         } catch (Exception e) {
             result = null;
-            stage = STAGE.CROPPED;
+            stage = Stage.CROPPED;
             throw e;
         }
 
@@ -185,11 +179,11 @@ public class ResultModel {
 
         try {
             result = sstage_result;
-            stage = STAGE.CLASSIFIED;
+            stage = Stage.CLASSIFIED;
             return true;
         } catch (Exception e) {
             result = null;
-            stage = STAGE.CROPPED;
+            stage = Stage.CROPPED;
             throw e;
         }
 
