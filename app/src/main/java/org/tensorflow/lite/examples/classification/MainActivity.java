@@ -56,7 +56,9 @@ public class MainActivity extends Activity {
     private Classifier classifier;
     private Model model = Model.FLOAT;
     private Device device = Device.CPU;
+    private Bitmap resultmodel_img = null;
     private int numThreads = -1;
+    private ResultModel image_status;
 
     private Bitmap convertBitmap(Bitmap bitmap){
         Bitmap converted = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
@@ -134,6 +136,8 @@ public class MainActivity extends Activity {
     public void activateCamera(View v) {
         Intent intent = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
+
+
     }
 
     public void mainGotoAbout(View v) {
@@ -161,6 +165,21 @@ public class MainActivity extends Activity {
         Intent cameraIntent = new
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+    }
+
+    public String getStatusFromURI(Uri contentUri, Bitmap cropped_img, int resultCode) {
+        if (resultCode == Activity.RESULT_OK) {
+            String res = null;
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                res = cursor.getString(column_index);
+            }
+            cursor.close();
+            return "firststagedone";
+        }
+        return "incomplete";
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -198,6 +217,8 @@ public class MainActivity extends Activity {
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
                     processImage(photo);
             }
+
+            resultmodel_img  = image_status.getOriginalBitmap();
         }
     }
 
@@ -227,6 +248,8 @@ public class MainActivity extends Activity {
                 .withMaxResultSize(100, 100)
                 .withAspectRatio(5f, 5f)
                 .start(this);
+
+       // image_status.setCroppedUri()
     }
 
     public String getPathFromURI(Uri contentUri) {

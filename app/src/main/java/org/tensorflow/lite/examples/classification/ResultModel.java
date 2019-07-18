@@ -88,6 +88,27 @@ public class ResultModel {
         return obj.uri_cropped;
     }
 
+    public Stage get_Cur_State()  {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
+            throw exp;
+        }
+
+        return stage;
+    }
+
+    public boolean set_Cur_State(Bitmap b, Uri org_uri) {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
+            return false;
+        }
+            uri_org = null;
+            img_org = null;
+            stage = Stage.ORIGINAL;
+
+        return true;
+    }
+
     public void clearAllField() throws IllegalStateException
     {
         uri_org = null;
@@ -127,8 +148,6 @@ public class ResultModel {
             stage = Stage.ORIGINAL;
             throw e;
         }
-
-
     }
 
     public boolean setCroppedUri(Uri cropped_uri, Bitmap cropped_img) throws IllegalStateException
