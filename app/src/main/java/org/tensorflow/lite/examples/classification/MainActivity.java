@@ -97,11 +97,12 @@ public class MainActivity extends Activity {
                     if (data.getData() != null) {
                         try {
                             Uri sourceUri = data.getData();
-                            File file = getImageFile();
-                            Uri destinationUri = Uri.fromFile(file);
-                            openCropActivity(sourceUri, destinationUri);
+//                            File file = getImageFile();
+//                            Uri destinationUri = Uri.fromFile(file);
+//                            openCropActivity(sourceUri, destinationUri);
 
                             Log.d("imageURI",sourceUri.toString());
+                            Log.d("path", getPathFromURI(sourceUri));
 //                            File file = new File(getPathFromURI(imageURI));
 ////                            if (file.exists()) {
 ////                                Log.d("EXISTS",imageURI.toString());

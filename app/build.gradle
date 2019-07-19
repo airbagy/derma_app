@@ -48,4 +48,5 @@ dependencies {
     // Use local TensorFlow library
     // implementation 'org.tensorflow:tensorflow-lite-local:0.0.0'
     implementation 'com.github.yalantis:ucrop:2.2.3'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8+'
 }
