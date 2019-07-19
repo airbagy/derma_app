@@ -18,6 +18,7 @@ import android.os.Build;
 import java.io.IOException;
 import android.os.Environment;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,10 +52,14 @@ import org.tensorflow.lite.examples.classification.tflite.Classifier;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
 
+import android.content.Context;
+import java.io.ByteArrayOutputStream;
+
 public class MainActivity extends Activity {
 
     public static final int GALLERY_REQUEST_CODE = 0;
     private String currentPhotoPath = "";
+    private String imageFilePath = "";
     public static final int CAMERA_REQUEST_CODE = 1;
     private static final Logger LOGGER = new Logger();
     private Classifier classifier;
@@ -174,6 +179,12 @@ public class MainActivity extends Activity {
 
     public void processCameraImage(View v) {
 
+//        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
+//        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
+//        m_intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+//        startActivityForResult(m_intent, REQUEST_CAMERA_IMAGE);
+
         Intent cameraIntent = new
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
@@ -193,47 +204,6 @@ public class MainActivity extends Activity {
         }
         return "incomplete";
     }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        if (resultCode == Activity.RESULT_OK) {
-//            switch (requestCode) {
-//                case GALLERY_REQUEST_CODE:
-//                    System.out.println("gallery");
-//                    System.out.println(data.getData());
-//                    if (data.getData() != null) {
-//                        Uri imageURI = data.getData();
-//                        try {
-//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-//                            CropImage.activity(imageURI)
-//                                    .start(this);
-//                            processImage(bitmap);
-//                        }
-//                        catch (Exception e){
-//                            System.out.println("Cannot process image");
-//                        }
-////                        String path = null;
-////                        String [] files = {MediaStore.MediaColumns.DATA};
-////                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
-////                        if (cursor.moveToFirst()) {
-////                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-////                           path = cursor.getString(column_index);
-////                        }
-////                        BitmapFactory.Options options = new BitmapFactory.Options();
-////                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-////                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-////                        processImage(bitmap);
-////                        cursor.close();
-//                    }
-//                    break;
-//
-//                case CAMERA_REQUEST_CODE:
-//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-//                    processImage(photo);
-//            }
-//
-//            resultmodel_img  = image_status.getOriginalBitmap();
-//        }
-//    }
 
     public void accessMaps(View v) {
         // Create a Uri from an intent string. Use the result to create an Intent.
@@ -255,10 +225,20 @@ public class MainActivity extends Activity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == Activity.RESULT_OK) {
+            Uri sourceUri;
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    processImage(photo);
+
+                    sourceUri = getImageUri(getApplicationContext(),photo);
+                    Log.d("imageURI",sourceUri.toString());
+                    CropImage.activity(sourceUri)
+                            .setAspectRatio(3,4)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setBackgroundColor(Color.parseColor("#73666666"))
+                            .start(this);
+
+//                    processImage(photo);
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
                     CropImage.ActivityResult result = CropImage.getActivityResult(data);
                     if (resultCode == RESULT_OK) {
@@ -270,12 +250,15 @@ public class MainActivity extends Activity {
                 case GALLERY_REQUEST_CODE:
                     if (data.getData() != null) {
                         try {
-                            Uri sourceUri = data.getData();
+                            sourceUri = data.getData();
 //                            File file = getImageFile();
 //                            Uri destinationUri = Uri.fromFile(file);
 
                             Log.d("imageURI",sourceUri.toString());
                             CropImage.activity(sourceUri)
+                                    .setAspectRatio(3,4)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .setBackgroundColor(Color.parseColor("#73666666"))
                                     .start(this);
 
 //                            File file = new File(getPathFromURI(imageURI));
@@ -297,6 +280,13 @@ public class MainActivity extends Activity {
 
             }
         }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public String getPathFromURI(Uri contentUri) {
@@ -340,4 +330,45 @@ public class MainActivity extends Activity {
 //                .withMaxResultSize(100, 100)
 //                .withAspectRatio(5f, 5f)
 //                .start(this);
+//    }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (resultCode == Activity.RESULT_OK) {
+//            switch (requestCode) {
+//                case GALLERY_REQUEST_CODE:
+//                    System.out.println("gallery");
+//                    System.out.println(data.getData());
+//                    if (data.getData() != null) {
+//                        Uri imageURI = data.getData();
+//                        try {
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
+//                            CropImage.activity(imageURI)
+//                                    .start(this);
+//                            processImage(bitmap);
+//                        }
+//                        catch (Exception e){
+//                            System.out.println("Cannot process image");
+//                        }
+////                        String path = null;
+////                        String [] files = {MediaStore.MediaColumns.DATA};
+////                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
+////                        if (cursor.moveToFirst()) {
+////                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+////                           path = cursor.getString(column_index);
+////                        }
+////                        BitmapFactory.Options options = new BitmapFactory.Options();
+////                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+////                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+////                        processImage(bitmap);
+////                        cursor.close();
+//                    }
+//                    break;
+//
+//                case CAMERA_REQUEST_CODE:
+//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                    processImage(photo);
+//            }
+//
+//            resultmodel_img  = image_status.getOriginalBitmap();
+//        }
 //    }
