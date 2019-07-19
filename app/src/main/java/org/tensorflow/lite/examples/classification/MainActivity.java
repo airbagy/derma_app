@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
-import com.yalantis.ucrop.UCrop;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import java.io.File;
 import android.provider.MediaStore;
@@ -15,6 +14,7 @@ import android.database.Cursor;
 import android.os.Build;
 import java.io.IOException;
 import android.os.Environment;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 
 
@@ -80,29 +80,29 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
-        UCrop.Options options = new UCrop.Options();
-        options.setCircleDimmedLayer(true);
-        options.setCropFrameColor(ContextCompat.getColor(this, R.color.colorAccent));
-        UCrop.of(sourceUri, destinationUri)
-                .withMaxResultSize(100, 100)
-                .withAspectRatio(5f, 5f)
-                .start(this);
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (resultCode == RESULT_OK) {
+                        Uri resultUri = result.getUri();
+
+                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                        Exception error = result.getError();
+                    }
                 case GALLERY_REQUEST_CODE:
                     if (data.getData() != null) {
                         try {
                             Uri sourceUri = data.getData();
 //                            File file = getImageFile();
 //                            Uri destinationUri = Uri.fromFile(file);
-//                            openCropActivity(sourceUri, destinationUri);
 
                             Log.d("imageURI",sourceUri.toString());
-                            Log.d("path", getPathFromURI(sourceUri));
+                            CropImage.activity(sourceUri)
+                                    .start(this);
+
 //                            File file = new File(getPathFromURI(imageURI));
 ////                            if (file.exists()) {
 ////                                Log.d("EXISTS",imageURI.toString());
@@ -156,3 +156,13 @@ public class MainActivity extends Activity {
     }
 
 }
+
+//    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
+//        UCrop.Options options = new UCrop.Options();
+//        options.setCircleDimmedLayer(true);
+//        options.setCropFrameColor(ContextCompat.getColor(this, R.color.colorAccent));
+//        UCrop.of(sourceUri, destinationUri)
+//                .withMaxResultSize(100, 100)
+//                .withAspectRatio(5f, 5f)
+//                .start(this);
+//    }
