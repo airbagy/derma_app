@@ -1,0 +1,3 @@
+Model: model_nv
+Input: conv2d_1_input
+Output: metrics/acc/ArgMax_1

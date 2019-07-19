@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import org.tensorflow.lite.examples.classification.customview.AutoFitTextureView;
 
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private final int SPLASH_DISPLAY_LENGTH = 3000;

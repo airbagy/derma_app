@@ -9,12 +9,16 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
-import com.yalantis.ucrop.UCrop;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import java.io.File;
 import android.provider.MediaStore;
 import android.database.Cursor;
+import android.os.Build;
+import java.io.IOException;
+import android.os.Environment;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,9 +52,14 @@ import org.tensorflow.lite.examples.classification.tflite.Classifier;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
 
+import android.content.Context;
+import java.io.ByteArrayOutputStream;
+
 public class MainActivity extends Activity {
 
     public static final int GALLERY_REQUEST_CODE = 0;
+    private String currentPhotoPath = "";
+    private String imageFilePath = "";
     public static final int CAMERA_REQUEST_CODE = 1;
     private static final Logger LOGGER = new Logger();
     private Classifier classifier;
@@ -151,16 +160,30 @@ public class MainActivity extends Activity {
     }
 
     public void accessLibrary(View v){
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        String[] mimetypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
+//        Intent intent = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+//        String[] mimetypes = {"image/jpeg", "image/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
+        Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        pictureIntent.setType("image/*");
+        pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
+            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
+        startActivityForResult(Intent.createChooser(pictureIntent, "Select Picture"), GALLERY_REQUEST_CODE);
     }
 
     public void processCameraImage(View v) {
+
+//        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
+//        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
+//        m_intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+//        startActivityForResult(m_intent, REQUEST_CAMERA_IMAGE);
 
         Intent cameraIntent = new
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -182,46 +205,6 @@ public class MainActivity extends Activity {
         return "incomplete";
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case GALLERY_REQUEST_CODE:
-                    System.out.println("gallery");
-                    System.out.println(data.getData());
-                    if (data.getData() != null) {
-                        Uri imageURI = data.getData();
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-                            openCropActivity(imageURI, imageURI);
-                            processImage(bitmap);
-                        }
-                        catch (Exception e){
-                            System.out.println("Cannot process image");
-                        }
-//                        String path = null;
-//                        String [] files = {MediaStore.MediaColumns.DATA};
-//                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
-//                        if (cursor.moveToFirst()) {
-//                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//                           path = cursor.getString(column_index);
-//                        }
-//                        BitmapFactory.Options options = new BitmapFactory.Options();
-//                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-//                        processImage(bitmap);
-//                        cursor.close();
-                    }
-                    break;
-
-                case CAMERA_REQUEST_CODE:
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    processImage(photo);
-            }
-
-            resultmodel_img  = image_status.getOriginalBitmap();
-        }
-    }
-
     public void accessMaps(View v) {
         // Create a Uri from an intent string. Use the result to create an Intent.
         Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
@@ -240,16 +223,70 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
-        UCrop.Options options = new UCrop.Options();
-        options.setCircleDimmedLayer(true);
-        options.setCropFrameColor(ContextCompat.getColor(this, R.color.colorAccent));
-        UCrop.of(sourceUri, destinationUri)
-                .withMaxResultSize(100, 100)
-                .withAspectRatio(5f, 5f)
-                .start(this);
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == Activity.RESULT_OK) {
+            Uri sourceUri;
+            switch (requestCode) {
+                case CAMERA_REQUEST_CODE:
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
 
-       // image_status.setCroppedUri()
+                    sourceUri = getImageUri(getApplicationContext(),photo);
+                    Log.d("imageURI",sourceUri.toString());
+                    CropImage.activity(sourceUri)
+                            .setAspectRatio(3,4)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setBackgroundColor(Color.parseColor("#73666666"))
+                            .start(this);
+
+//                    processImage(photo);
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (resultCode == RESULT_OK) {
+                        Uri resultUri = result.getUri();
+
+                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                        Exception error = result.getError();
+                    }
+                case GALLERY_REQUEST_CODE:
+                    if (data.getData() != null) {
+                        try {
+                            sourceUri = data.getData();
+//                            File file = getImageFile();
+//                            Uri destinationUri = Uri.fromFile(file);
+
+                            Log.d("imageURI",sourceUri.toString());
+                            CropImage.activity(sourceUri)
+                                    .setAspectRatio(3,4)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                    .start(this);
+
+//                            File file = new File(getPathFromURI(imageURI));
+////                            if (file.exists()) {
+////                                Log.d("EXISTS",imageURI.toString());
+////                            }
+
+//                            openCropActivity(sourceUri, sourceUri);
+                        } catch (Exception e) {
+
+                        }
+
+
+//                        Intent intent = new Intent(this, ClassifierActivity.class);
+//                        intent.putExtra("imageURI", imageURI.toString());
+//                        startActivity(intent);
+                    }
+                    break;
+
+            }
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public String getPathFromURI(Uri contentUri) {
@@ -263,4 +300,75 @@ public class MainActivity extends Activity {
         cursor.close();
         return res;
     }
+
+    private File getImageFile() throws IOException {
+        String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
+        File storageDir = new File(
+                Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DCIM
+                ), "Camera"
+        );
+        System.out.println(storageDir.getAbsolutePath());
+        if (storageDir.exists())
+            System.out.println("File exists");
+        else
+            System.out.println("File not exists");
+        File file = File.createTempFile(
+                imageFileName, ".jpg", storageDir
+        );
+        currentPhotoPath = "file:" + file.getAbsolutePath();
+        return file;
+    }
+
 }
+
+//    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
+//        UCrop.Options options = new UCrop.Options();
+//        options.setCircleDimmedLayer(true);
+//        options.setCropFrameColor(ContextCompat.getColor(this, R.color.colorAccent));
+//        UCrop.of(sourceUri, destinationUri)
+//                .withMaxResultSize(100, 100)
+//                .withAspectRatio(5f, 5f)
+//                .start(this);
+//    }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (resultCode == Activity.RESULT_OK) {
+//            switch (requestCode) {
+//                case GALLERY_REQUEST_CODE:
+//                    System.out.println("gallery");
+//                    System.out.println(data.getData());
+//                    if (data.getData() != null) {
+//                        Uri imageURI = data.getData();
+//                        try {
+//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
+//                            CropImage.activity(imageURI)
+//                                    .start(this);
+//                            processImage(bitmap);
+//                        }
+//                        catch (Exception e){
+//                            System.out.println("Cannot process image");
+//                        }
+////                        String path = null;
+////                        String [] files = {MediaStore.MediaColumns.DATA};
+////                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
+////                        if (cursor.moveToFirst()) {
+////                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+////                           path = cursor.getString(column_index);
+////                        }
+////                        BitmapFactory.Options options = new BitmapFactory.Options();
+////                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+////                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+////                        processImage(bitmap);
+////                        cursor.close();
+//                    }
+//                    break;
+//
+//                case CAMERA_REQUEST_CODE:
+//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                    processImage(photo);
+//            }
+//
+//            resultmodel_img  = image_status.getOriginalBitmap();
+//        }
+//    }
