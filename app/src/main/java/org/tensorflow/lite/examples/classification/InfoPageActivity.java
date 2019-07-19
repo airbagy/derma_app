@@ -35,6 +35,10 @@ public class InfoPageActivity extends Activity {
             return true;
         }
     }
+    public void clickBack(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

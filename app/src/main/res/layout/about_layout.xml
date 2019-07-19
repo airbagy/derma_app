@@ -37,5 +37,18 @@
             android:fontFamily="casual"
             android:gravity="center_horizontal"
             android:textSize="18sp"/>
+
+        <ImageButton
+            android:layout_width="83dp"
+            android:layout_height="91dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+
+            android:adjustViewBounds="true"
+
+            android:background="@null"
+            android:onClick="consentAction"
+            android:scaleType="fitCenter"
+            android:src="@drawable/check" />
     </RelativeLayout>
 </RelativeLayout>
