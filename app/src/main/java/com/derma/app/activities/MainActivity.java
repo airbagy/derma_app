@@ -98,27 +98,27 @@ public class MainActivity extends Activity {
     }
 
     public void processCameraImage(View v) {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                    Manifest.permission.CAMERA)) {
-//                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
-//                        GRANT_CAMERA_PERMISSION);
-//            }
-//            else {
-//                // No explanation needed; request the permission
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.CAMERA},
-//                        GRANT_CAMERA_PERMISSION);
-//            }
-//        }
-//        else{
-//            Intent cameraIntent = new
-//                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-//        }
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        GRANT_CAMERA_PERMISSION);
+            }
+            else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        GRANT_CAMERA_PERMISSION);
+            }
+        }
+        else{
+            Intent cameraIntent = new
+                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+        }
+//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
     @Override
