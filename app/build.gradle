@@ -10,7 +10,7 @@ allprojects {
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "org.tensorflow.lite.examples.classification"
+        applicationId "com.derma.app"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
