@@ -1,2 +1,2 @@
-non-nv
-nv
+Non-benign
+Melanocytic nevi
