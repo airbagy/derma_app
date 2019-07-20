@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultModel = ResultModel.getInstance();
+        resultModel.clearResultModel();
         setContentView(R.layout.main_menu);
     }
 
@@ -129,8 +130,9 @@ public class MainActivity extends Activity {
                     photo = (Bitmap) data.getExtras().get("data");
                     Intent intent = new Intent(this, ClassifierActivity.class);
                     sourceUri = getImageUri(getApplicationContext(), photo);
-                    resultModel.setOriginal(sourceUri, photo);
-                    resultModel.set_Cur_State(Stage.ORIGINAL);
+                    resultModel.setImg_org(photo);
+                    resultModel.setUri_org(sourceUri);
+                    resultModel.setStage(Stage.ORIGINAL);
 
                     Log.d("imageURI",sourceUri.toString());
                     CropImage.activity(sourceUri)
@@ -147,8 +149,9 @@ public class MainActivity extends Activity {
                             photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
                                     sourceUri);
                             Log.d("imageURI",sourceUri.toString());
-                            resultModel.setOriginal(sourceUri, photo);
-                            resultModel.set_Cur_State(Stage.ORIGINAL);
+                            resultModel.setImg_org(photo);
+                            resultModel.setUri_org(sourceUri);
+                            resultModel.setStage(Stage.ORIGINAL);
 
                             CropImage.activity(sourceUri)
                                     .setAspectRatio(3,4)
@@ -169,7 +172,9 @@ public class MainActivity extends Activity {
                         try{
                             photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
                                     resultUri);
-                            resultModel.setCroppedUri(resultUri, photo);
+                            resultModel.setImg_cropped(photo);
+                            resultModel.setUri_cropped(resultUri);
+                            resultModel.setStage(Stage.CROPPED);
                             StartClassification();
                         }
                         catch(Exception e) {

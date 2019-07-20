@@ -44,6 +44,9 @@
         <activity android:name="activities.SharingActivity">
         </activity>
 
+        <activity android:name="activities.ResultActivity">
+        </activity>
+
         <!--<activity-->
             <!--android:name="com.yalantis.ucrop.UCropActivity"-->
             <!--android:screenOrientation="portrait"-->

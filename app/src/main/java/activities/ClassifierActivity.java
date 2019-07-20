@@ -17,6 +17,7 @@
 package activities;
 
 import android.app.AppComponentFactory;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -37,10 +38,12 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.derma.app.R;
 
 import org.tensorflow.lite.examples.classification.ResultModel;
+import org.tensorflow.lite.examples.classification.Stage;
 import org.tensorflow.lite.examples.classification.env.BorderedText;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
@@ -108,13 +111,18 @@ public class ClassifierActivity extends AppCompatActivity {
       final long startTime = SystemClock.uptimeMillis();
       final List<Classifier.Recognition> results = nvclassifier.recognizeImage(croppedBitmap);
       System.out.println(results);
-      Dictionary<String, Float> resultDict = new Hashtable<>();
+      Map<String, Float> resultDict = new HashMap<>();
       for (int i = 0; i < results.size(); i++){
         resultDict.put(results.get(i).getId(), results.get(i).getConfidence());
       }
-      resultModel.setFirstStageResult(resultDict);
+      resultModel.setNvResult(resultDict);
+      resultModel.setStage(Stage.NV_ClASSIFIED);
       if (results.get(0).getConfidence() >= results.get(1).getConfidence()){
         ClassifyCancer(image);
+      }
+      else {
+        Intent intent = new Intent(this, ResultActivity.class);
+        startActivity(intent);
       }
     }
   }
@@ -141,11 +149,14 @@ public class ClassifierActivity extends AppCompatActivity {
       final long startTime = SystemClock.uptimeMillis();
       final List<Classifier.Recognition> results = cancerclassifier.recognizeImage(croppedBitmap);
       System.out.println(results);
-      Dictionary<String, Float> resultDict = new Hashtable<>();
+      Map<String, Float> resultDict = new HashMap<>();
       for (int i = 0; i < results.size(); i++){
         resultDict.put(results.get(i).getId(), results.get(i).getConfidence());
       }
-      resultModel.setSecondStageResult(resultDict);
+      resultModel.setCancerResult(resultDict);
+      resultModel.setStage(Stage.CLASSIFIED);
+      Intent intent = new Intent(this, ResultActivity.class);
+      startActivity(intent);
     }
   }
 
@@ -153,9 +164,10 @@ public class ClassifierActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     resultModel = ResultModel.getInstance();
-    ClassifyNV(resultModel.getOriginalBitmap());
+    if (resultModel.getStage() == Stage.CROPPED){
+      ClassifyNV(resultModel.getImg_cropped());
+    }
   }
-
 
   private void recreateClassifier(Model model, Device device, int numThreads) {
     if (nvclassifier != null) {

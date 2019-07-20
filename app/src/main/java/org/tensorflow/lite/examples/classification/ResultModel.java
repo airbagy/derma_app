@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import java.util.Dictionary;
 import android.net.Uri;
 import java.lang.String;
+import java.util.Map;
+
 import android.provider.MediaStore;
 
 
@@ -12,13 +14,14 @@ public class ResultModel {
     private static final ResultModel obj = new ResultModel();
     private Uri uri_org = null;
     private Uri uri_cropped = null;
-    private Dictionary result = null;
+    private Map<String, Float> nvResult = null;
+    private Map<String, Float> cancerResult = null;
     private Bitmap img_org = null;
     private Bitmap img_cropped = null;
     private Stage stage = Stage.ORIGINAL;
 
 
-    public Stage returnCurState()
+    public Stage getStage()
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
@@ -28,96 +31,67 @@ public class ResultModel {
         return stage;
     }
 
-    public Bitmap getOriginalBitmap() throws IllegalStateException
+    public Bitmap getImg_org() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
 
-        if (obj.img_org == null) {
+        if (img_org == null) {
             IllegalStateException exp = new IllegalStateException("Original Bitmap not created");
             throw exp;
         }
 
-        return obj.img_org;
+        return img_org;
     }
 
-    public Bitmap getCroppedBitmap() throws IllegalStateException
+    public Bitmap getImg_cropped() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
 
-        if (obj.img_cropped == null) {
+        if (img_cropped == null) {
             IllegalStateException exp = new IllegalStateException("Cropped Bitmap not created");
             throw exp;
         }
 
-        return obj.img_cropped;
+        return img_cropped;
     }
 
-    public Uri getOriginalUri() throws IllegalStateException
+    public Uri getUri_org() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
 
-        if (obj.uri_org == null) {
+        if (uri_org == null) {
             IllegalStateException exp = new IllegalStateException("Original Uri not created");
             throw exp;
         }
 
-        return obj.uri_org;
+        return uri_org;
     }
 
-    public Uri getCroopedUri() throws IllegalStateException
+    public Uri getUri_cropped() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
 
-        if (obj.uri_cropped == null) {
+        if (uri_cropped == null) {
             IllegalStateException exp = new IllegalStateException("Cropped Uri not created");
             throw exp;
         }
 
-        return obj.uri_cropped;
+        return uri_cropped;
     }
 
-    public Stage get_Cur_State()  {
-        if (obj == null) {
-            IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
-            throw exp;
-        }
-
-        return stage;
-    }
-
-    public boolean set_Cur_State(Stage stage) {
-        if (obj == null) {
-            IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
-            return false;
-        }
-            this.stage = stage;
-
-        return true;
-    }
-
-    public void clearAllField() throws IllegalStateException
-    {
-        uri_org = null;
-        uri_cropped = null;
-        result = null;
-        img_org = null;
-        img_cropped = null;
-        stage = Stage.ORIGINAL;
-    }
-
-    public static ResultModel getInstance()  throws IllegalStateException
+    public static ResultModel getInstance() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
@@ -127,98 +101,135 @@ public class ResultModel {
         return obj;
     }
 
-    public boolean setOriginal(Uri org_uri, Bitmap org_img) throws IllegalStateException
+    public void setImg_org(Bitmap img_org) throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
-
-        try
-        {
-            uri_org = org_uri;
-            img_org = org_img;
-            return true;
-        } catch (Exception e)
-        {
-            uri_org = null;
-            img_org = null;
-            stage = Stage.ORIGINAL;
-            throw e;
+        try{
+            this.img_org = img_org;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
-    public boolean setCroppedUri(Uri cropped_uri, Bitmap cropped_img) throws IllegalStateException
+    public void setUri_org(Uri uri_org) throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
+        try{
+            this.uri_org = uri_org;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public void setImg_cropped(Bitmap img_cropped) throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            return;
+        }
+        try{
+            this.img_cropped = img_cropped;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setUri_cropped(Uri uri_cropped) throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            return;
+        }
+        try{
+            this.uri_cropped = uri_cropped;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setStage(Stage stage) throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
         try {
-            uri_cropped = cropped_uri;
-            img_cropped = cropped_img;
-            stage = Stage.CROPPED;
-            return true;
-        } catch (Exception e) {
-            uri_cropped = null;
-            img_cropped = null;
-            stage = Stage.ORIGINAL;
-            throw e;
+            this.stage = stage;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
-    public boolean setFirstStageResult(Dictionary fstage_result) throws IllegalStateException
+    public void setNvResult(Map<String, Float> nvResult) throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
+        try{
+            this.nvResult = nvResult;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public Map<String, Float> getNvResult() throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
+        return nvResult;
+    }
+
+    public void setCancerResult(Map<String, Float> cancerResult) throws IllegalStateException {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
         try {
-            result = fstage_result;
-            stage = Stage.NV_ClASSIFIED;
-            return true;
+            this.cancerResult = cancerResult;
         } catch (Exception e) {
-            result = null;
-            stage = Stage.CROPPED;
-            throw e;
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-
     }
 
-    public boolean setSecondStageResult(Dictionary sstage_result) throws IllegalStateException
+    public Map<String, Float> getCancerResult() throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
             throw exp;
         }
-
-        try {
-            result = sstage_result;
-            stage = Stage.CLASSIFIED;
-            return true;
-        } catch (Exception e) {
-            result = null;
-            stage = Stage.CROPPED;
-            throw e;
-        }
-
+        return cancerResult;
     }
 
-    public Dictionary getResult() throws IllegalStateException
+    public void clearResultModel() throws IllegalStateException
     {
-        if (obj == null) {
-            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
-            throw exp;
-        }
-
-        if (obj.result == null) {
-            IllegalStateException exp = new IllegalStateException("Result not created");
-            throw exp;
-        }
-
-        return obj.result;
+        uri_org = null;
+        uri_cropped = null;
+        nvResult = null;
+        cancerResult = null;
+        img_org = null;
+        img_cropped = null;
+        stage = Stage.ORIGINAL;
     }
-
 }
