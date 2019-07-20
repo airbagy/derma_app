@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:alpha="0.8"
+    android:background="@drawable/derma_project_bg">
+
+    <LinearLayout
+        android:layout_width="243dp"
+        android:layout_height="545dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Receive"
+            android:textSize="50px"/>
+
+        <EditText
+            android:id="@+id/recv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Email Address" />
+
+        <EditText
+            android:id="@+id/recv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/recv_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Subject" />
+
+        <EditText
+            android:id="@+id/recv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Code"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/recv_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="recvAction"
+            android:textColor="#fff"
+            android:background="@drawable/round_btn"
+            android:text="Receive" />
+
+        <TextView
+            android:id="@+id/recv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No result" />
+    </LinearLayout>
+</RelativeLayout>
