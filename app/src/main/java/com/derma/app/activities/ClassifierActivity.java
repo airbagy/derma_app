@@ -104,7 +104,7 @@ public class ClassifierActivity extends AppCompatActivity {
       }
       resultModel.setNvResult(resultDict);
       resultModel.setStage(Stage.NV_ClASSIFIED);
-      if (results.get(0).getConfidence() >= results.get(1).getConfidence()){
+      if (resultDict.get("Dysplastic nevi") > resultDict.get("Melanocytic nevi")){
         ClassifyCancer(image);
       }
       else {
