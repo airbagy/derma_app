@@ -119,7 +119,7 @@ public class ResultModel {
         stage = Stage.ORIGINAL;
     }
 
-    public ResultModel getInstance()  throws IllegalStateException
+    public static ResultModel getInstance()  throws IllegalStateException
     {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");

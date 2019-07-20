@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.app.Activity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.tensorflow.lite.examples.classification.R;
 
 import javax.mail.*;
 

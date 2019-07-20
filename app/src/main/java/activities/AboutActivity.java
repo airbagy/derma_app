@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+
+import org.tensorflow.lite.examples.classification.R;
 
 
 public class AboutActivity extends Activity {

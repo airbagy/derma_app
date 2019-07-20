@@ -54,6 +54,11 @@ public abstract class Classifier {
     GPU
   }
 
+  public enum ClassifierType{
+    NV,
+    CANCER
+  }
+
   /** Number of results to show in the UI. */
   private static final int MAX_RESULTS = 3;
 
@@ -92,14 +97,26 @@ public abstract class Classifier {
    * @param numThreads The number of threads to use for classification.
    * @return A classifier with the desired configuration.
    */
-  public static Classifier create(Activity activity, Model model, Device device, int numThreads)
+  public static Classifier create(Activity activity, Model model, Device device, int numThreads,
+                                  ClassifierType classifier)
       throws IOException {
-    if (model == Model.QUANTIZED) {
+    if (classifier == ClassifierType.CANCER){
+      if (model == Model.QUANTIZED) {
 //      return new ClassifierQuantizedMobileNet(activity, device, numThreads);
-      return new ClassifierSkinDetNet(activity, device, numThreads);
-    } else {
+        return new ClassifierSkinDetNet(activity, device, numThreads);
+      } else {
 //      return new ClassifierFloatMobileNet(activity, device, numThreads);
-      return new ClassifierSkinDetNet(activity, device, numThreads);
+        return new ClassifierSkinDetNet(activity, device, numThreads);
+      }
+    }
+    else{
+      if (model == Model.QUANTIZED) {
+//      return new ClassifierNVDetNet(activity, device, numThreads);
+        return new ClassifierNVDetNet(activity, device, numThreads);
+      } else {
+//      return new ClassifierNVDetNet(activity, device, numThreads);
+        return new ClassifierNVDetNet(activity, device, numThreads);
+      }
     }
   }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.Manifest;
 import android.app.Fragment;
@@ -52,6 +52,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.nio.ByteBuffer;
 import java.util.List;
+
+import org.tensorflow.lite.examples.classification.CameraConnectionFragment;
+import org.tensorflow.lite.examples.classification.LegacyCameraConnectionFragment;
+import org.tensorflow.lite.examples.classification.R;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;

@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DisclaimerActivity"
+            android:name="activities.DisclaimerActivity"
             android:label="@string/activity_name_classification"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -30,19 +30,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ClassifierActivity">
+        <activity android:name="activities.ClassifierActivity">
         </activity>
 
-        <activity android:name=".AboutActivity">
+        <activity android:name="activities.AboutActivity">
         </activity>
 
-        <activity android:name=".InfoPageActivity">
+        <activity android:name="activities.InfoPageActivity">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name="activities.MainActivity">
         </activity>
 
-        <activity android:name=".SharingActivity">
+        <activity android:name="activities.SharingActivity">
         </activity>
 
         <!--<activity-->

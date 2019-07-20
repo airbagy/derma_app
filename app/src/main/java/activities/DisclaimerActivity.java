@@ -1,10 +1,12 @@
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import org.tensorflow.lite.examples.classification.R;
 
 
 public class DisclaimerActivity extends Activity {

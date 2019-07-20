@@ -1,7 +1,8 @@
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.app.Activity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -9,46 +10,31 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.net.Uri;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import java.io.File;
 import android.provider.MediaStore;
-import android.database.Cursor;
 import android.os.Build;
 import java.io.IOException;
 import android.os.Environment;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import android.graphics.Bitmap;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import android.graphics.BitmapFactory;
-import android.provider.MediaStore;
 
+import org.tensorflow.lite.examples.classification.R;
+import org.tensorflow.lite.examples.classification.ResultModel;
 import org.tensorflow.lite.examples.classification.tflite.Classifier;
 
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Typeface;
-import android.media.ImageReader.OnImageAvailableListener;
-import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Size;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.Toast;
-import java.io.IOException;
+
 import java.util.List;
-import org.tensorflow.lite.examples.classification.env.BorderedText;
+
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
-import org.tensorflow.lite.examples.classification.tflite.Classifier;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
 
@@ -67,86 +53,86 @@ public class MainActivity extends Activity {
     private Device device = Device.CPU;
     private Bitmap resultmodel_img = null;
     private int numThreads = -1;
-    private ResultModel image_status;
+    private ResultModel resultModel;
 
-    private Bitmap convertBitmap(Bitmap bitmap){
-        Bitmap converted = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
-        Canvas canvas = new Canvas();
-        canvas.setBitmap(converted);
-        Paint paint = new Paint();
-        paint.setFilterBitmap(true);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
-        return converted;
-    }
 
-    private Bitmap getRGB(Bitmap src){
-        int [] colors = new int[src.getWidth() * src.getHeight()];
-        src.getPixels(colors, 0, src.getWidth(), 0 ,0, src.getWidth(), src.getHeight());
-        Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Config.ARGB_8888);
-        result.setPixels(colors, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
-        return result;
-    }
-
-    protected void processImage(Bitmap image) {
-        recreateClassifier(model, device, numThreads);
-        Bitmap rgbBitmap = getRGB(image);
-        Bitmap croppedBitmap = Bitmap.createBitmap(
-                classifier.getImageSizeX(), classifier.getImageSizeY(), Config.ARGB_8888);
-        Matrix frameToCropTransform = ImageUtils.getTransformationMatrix(
-                image.getWidth(),
-                image.getHeight(),
-                classifier.getImageSizeX(),
-                classifier.getImageSizeY(),
-                0,
-                true);
-        Matrix cropToFrameTransform = new Matrix();
-        frameToCropTransform.invert(cropToFrameTransform);
-        Canvas canvas = new Canvas(croppedBitmap);
-        canvas.drawBitmap(rgbBitmap, frameToCropTransform, null);
-
-        System.out.println("ProcessImage");
-        if (classifier != null) {
-            final long startTime = SystemClock.uptimeMillis();
-            final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
-            System.out.println(results);
-        }
-    }
-
-    private void recreateClassifier(Model model, Device device, int numThreads) {
-        if (classifier != null) {
-            LOGGER.d("Closing classifier.");
-            classifier.close();
-            classifier = null;
-        }
-        if (device == Device.GPU && model == Model.QUANTIZED) {
-            LOGGER.d("Not creating classifier: GPU doesn't support quantized models.");
-            runOnUiThread(
-                    () -> {
-                        Toast.makeText(this, "GPU does not yet supported quantized models.", Toast.LENGTH_LONG)
-                                .show();
-                    });
-            return;
-        }
-        try {
-            LOGGER.d(
-                    "Creating classifier (model=%s, device=%s, numThreads=%d)", model, device, numThreads);
-            classifier = Classifier.create(this, model, device, numThreads);
-        } catch (IOException e) {
-            LOGGER.e(e, "Failed to create classifier.");
-        }
-    }
+//    private Bitmap convertBitmap(Bitmap bitmap){
+//        Bitmap converted = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
+//        Canvas canvas = new Canvas();
+//        canvas.setBitmap(converted);
+//        Paint paint = new Paint();
+//        paint.setFilterBitmap(true);
+//        canvas.drawBitmap(bitmap, 0, 0, paint);
+//        return converted;
+//    }
+//
+//    private Bitmap getRGB(Bitmap src){
+//        int [] colors = new int[src.getWidth() * src.getHeight()];
+//        src.getPixels(colors, 0, src.getWidth(), 0 ,0, src.getWidth(), src.getHeight());
+//        Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Config.ARGB_8888);
+//        result.setPixels(colors, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
+//        return result;
+//    }
+//
+//    protected void processImage(Bitmap image) {
+//        recreateClassifier(model, device, numThreads);
+//        Bitmap rgbBitmap = getRGB(image);
+//        Bitmap croppedBitmap = Bitmap.createBitmap(
+//                classifier.getImageSizeX(), classifier.getImageSizeY(), Config.ARGB_8888);
+//        Matrix frameToCropTransform = ImageUtils.getTransformationMatrix(
+//                image.getWidth(),
+//                image.getHeight(),
+//                classifier.getImageSizeX(),
+//                classifier.getImageSizeY(),
+//                0,
+//                true);
+//        Matrix cropToFrameTransform = new Matrix();
+//        frameToCropTransform.invert(cropToFrameTransform);
+//        Canvas canvas = new Canvas(croppedBitmap);
+//        canvas.drawBitmap(rgbBitmap, frameToCropTransform, null);
+//
+//        System.out.println("ProcessImage");
+//        if (classifier != null) {
+//            final long startTime = SystemClock.uptimeMillis();
+//            final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
+//            System.out.println(results);
+//        }
+//    }
+//
+//    private void recreateClassifier(Model model, Device device, int numThreads) {
+//        if (classifier != null) {
+//            LOGGER.d("Closing classifier.");
+//            classifier.close();
+//            classifier = null;
+//        }
+//        if (device == Device.GPU && model == Model.QUANTIZED) {
+//            LOGGER.d("Not creating classifier: GPU doesn't support quantized models.");
+//            runOnUiThread(
+//                    () -> {
+//                        Toast.makeText(this, "GPU does not yet supported quantized models.", Toast.LENGTH_LONG)
+//                                .show();
+//                    });
+//            return;
+//        }
+//        try {
+//            LOGGER.d(
+//                    "Creating classifier (model=%s, device=%s, numThreads=%d)", model, device, numThreads);
+//            classifier = Classifier.create(this, model, device, numThreads, Classifier.ClassifierType.CANCER);
+//        } catch (IOException e) {
+//            LOGGER.e(e, "Failed to create classifier.");
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resultModel = ResultModel.getInstance();
         setContentView(R.layout.main_menu);
     }
 
     public void activateCamera(View v) {
         Intent intent = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
-
-
     }
 
     public void mainGotoAbout(View v) {
@@ -160,13 +146,6 @@ public class MainActivity extends Activity {
     }
 
     public void accessLibrary(View v){
-//        Intent intent = new Intent(Intent.ACTION_PICK,
-//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("image/*");
-//        String[] mimetypes = {"image/jpeg", "image/png"};
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(intent.createChooser(intent, "Select your image sample."), GALLERY_REQUEST_CODE);
         Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pictureIntent.setType("image/*");
         pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -178,13 +157,6 @@ public class MainActivity extends Activity {
     }
 
     public void processCameraImage(View v) {
-
-//        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
-//        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
-//        m_intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
-//        startActivityForResult(m_intent, REQUEST_CAMERA_IMAGE);
-
         Intent cameraIntent = new
                 Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
@@ -218,25 +190,21 @@ public class MainActivity extends Activity {
         startActivity(mapIntent);
     }
 
-    public void activateInfoPage(View v){
-        Intent intent = new Intent(this, InfoPageActivity.class);
-        startActivity(intent);
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-
-                    sourceUri = getImageUri(getApplicationContext(),photo);
-                    Log.d("imageURI",sourceUri.toString());
-                    CropImage.activity(sourceUri)
-                            .setAspectRatio(3,4)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setBackgroundColor(Color.parseColor("#73666666"))
-                            .start(this);
+                    resultModel.setOriginal(data.getData(), photo);
+                    Intent intent = new Intent(this, ClassifierActivity.class);
+//                    sourceUri = getImageUri(getApplicationContext(),photo);
+//                    Log.d("imageURI",sourceUri.toString());
+//                    CropImage.activity(sourceUri)
+//                            .setAspectRatio(3,4)
+//                            .setGuidelines(CropImageView.Guidelines.ON)
+//                            .setBackgroundColor(Color.parseColor("#73666666"))
+//                            .start(this);
 
 //                    processImage(photo);
                 case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
@@ -251,15 +219,20 @@ public class MainActivity extends Activity {
                     if (data.getData() != null) {
                         try {
                             sourceUri = data.getData();
+                            Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                                    sourceUri);
+                            resultModel.setOriginal(data.getData(), bmp);
 //                            File file = getImageFile();
 //                            Uri destinationUri = Uri.fromFile(file);
 
                             Log.d("imageURI",sourceUri.toString());
-                            CropImage.activity(sourceUri)
-                                    .setAspectRatio(3,4)
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .setBackgroundColor(Color.parseColor("#73666666"))
-                                    .start(this);
+                            intent = new Intent(this, ClassifierActivity.class);
+                            startActivity(intent);
+//                            CropImage.activity(sourceUri)
+//                                    .setAspectRatio(3,4)
+//                                    .setGuidelines(CropImageView.Guidelines.ON)
+//                                    .setBackgroundColor(Color.parseColor("#73666666"))
+//                                    .start(this);
 
 //                            File file = new File(getPathFromURI(imageURI));
 ////                            if (file.exists()) {

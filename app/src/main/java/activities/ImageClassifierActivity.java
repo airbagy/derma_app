@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.classification;
+package activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -75,7 +75,7 @@ public class ImageClassifierActivity extends Activity {
         try {
             LOGGER.d(
                     "Creating classifier (model=%s, device=%s, numThreads=%d)", model, device, numThreads);
-            classifier = Classifier.create(this, model, device, numThreads);
+            classifier = Classifier.create(this, model, device, numThreads, Classifier.ClassifierType.CANCER);
         } catch (IOException e) {
             LOGGER.e(e, "Failed to create classifier.");
         }
