@@ -113,7 +113,7 @@ public class ClassifierActivity extends AppCompatActivity {
       System.out.println(results);
       Map<String, Float> resultDict = new HashMap<>();
       for (int i = 0; i < results.size(); i++){
-        resultDict.put(results.get(i).getId(), results.get(i).getConfidence());
+        resultDict.put(results.get(i).getTitle(), results.get(i).getConfidence());
       }
       resultModel.setNvResult(resultDict);
       resultModel.setStage(Stage.NV_ClASSIFIED);
@@ -151,7 +151,7 @@ public class ClassifierActivity extends AppCompatActivity {
       System.out.println(results);
       Map<String, Float> resultDict = new HashMap<>();
       for (int i = 0; i < results.size(); i++){
-        resultDict.put(results.get(i).getId(), results.get(i).getConfidence());
+        resultDict.put(results.get(i).getTitle(), results.get(i).getConfidence());
       }
       resultModel.setCancerResult(resultDict);
       resultModel.setStage(Stage.CLASSIFIED);

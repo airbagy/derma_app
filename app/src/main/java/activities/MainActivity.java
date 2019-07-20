@@ -134,7 +134,7 @@ public class MainActivity extends Activity {
                     resultModel.setUri_org(sourceUri);
                     resultModel.setStage(Stage.ORIGINAL);
 
-                    Log.d("imageURI",sourceUri.toString());
+                    Log.d("imageURI",sourceUri.toString())  ;
                     CropImage.activity(sourceUri)
                             .setAspectRatio(3,4)
                             .setGuidelines(CropImageView.Guidelines.ON)

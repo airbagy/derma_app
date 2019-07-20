@@ -1,8 +1,13 @@
 package activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,8 +32,8 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultModel = ResultModel.getInstance();
-        ll = findViewById(R.id.resultDisplay);
         setContentView(R.layout.results_page);
+        ll = findViewById(R.id.resultDisplay);
 
         Map<String, Float> nvResults = resultModel.getNvResult();
         Map<String, Float> cancerResults = resultModel.getCancerResult();
@@ -47,25 +52,32 @@ public class ResultActivity extends AppCompatActivity {
         String condition = "";
         Float max = 0f;
         for (Map.Entry<String, Float> entry: nvResults.entrySet()){
-            text += entry.getKey() + ": " + entry.getValue().toString() + "% ";
+            text += entry.getKey() + ": " + (entry.getValue() * 100) + "% ";
         }
         text += "\n";
         if (cancerResults != null){
             text += "Since your NV confidence was high, your most likely skin condition is: ";
-            for (Map.Entry<String, Float> entry: nvResults.entrySet()){
+            for (Map.Entry<String, Float> entry: cancerResults.entrySet()){
                 if (entry.getValue() > max){
                     condition = entry.getKey();
                     max = entry.getValue();
                 }
             }
+            max *= 100;
             text += condition + " with " + max.toString() + "% confidence.\n";
         }
         else {
             text += "Since your non-NV confidence was high, your skin likely has no averse conditions!";
         }
-
+        resultView.setBackgroundResource(R.drawable.round_textbox);
         resultView.setText(text);
         resultView.setLayoutParams(lp);
+        resultView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        resultView.setTextColor(Color.BLACK);
+        resultView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        resultView.setGravity(Gravity.CENTER);
+
+        infoView.setBackgroundResource(R.drawable.round_textbox);
 
         if (condition == "Actinic keratoses"){
             infoView.setText(R.string.Keratosis);
@@ -89,9 +101,23 @@ public class ResultActivity extends AppCompatActivity {
             infoView.setText(R.string.Pyogenic);
         }
         infoView.setLayoutParams(lp);
+        infoView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        infoView.setTextColor(Color.BLACK);
+        infoView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        infoView.setGravity(Gravity.CENTER);
 
         ll.addView(iv);
         ll.addView(resultView);
         ll.addView(infoView);
+    }
+
+    public void MainMenu(View v){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void ShareActivity(View v){
+        Intent intent = new Intent(this, SharingActivity.class);
+        startActivity(intent);
     }
 }
