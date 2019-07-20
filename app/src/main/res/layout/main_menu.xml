@@ -12,31 +12,39 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-
         <ImageButton
             android:id="@+id/camera_icon"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
             android:background="@null"
-            android:layout_centerHorizontal="true"
             android:onClick="processCameraImage"
             android:src="@drawable/rsz_camera" />
 
-
+        <ImageButton
+            android:id="@+id/download"
+            android:layout_width="37dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="360dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:onClick="processCameraImage"
+            android:scaleType="fitCenter"
+            android:src="@drawable/download"
+            android:textSize="30px" />
         <Button
             android:id="@+id/camera_button"
             android:layout_width="162dp"
-            android:text="@string/camera"
             android:layout_height="25dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="225dp"
-android:textSize="30px"
+            android:layout_marginTop="190dp"
             android:background="@drawable/button_border"
-            android:textColor="@color/orange"
-           android:onClick="processCameraImage"
+            android:onClick="processCameraImage"
             android:scaleType="fitCenter"
-            />
+            android:text="@string/camera"
+            android:textColor="@color/orange"
+            android:textSize="30px" />
 
         <!--  <Button
             android:id="@+id/button1"
@@ -50,8 +58,8 @@ android:textSize="30px"
 
         <ImageButton
             android:id="@+id/library_icon"
-            android:layout_width="95dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
 
             android:layout_centerHorizontal="true"
             android:layout_marginTop="300dp"
@@ -68,15 +76,15 @@ android:textSize="30px"
             android:layout_height="25dp"
 
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="405dp"
+            android:layout_marginTop="380dp"
             android:adjustViewBounds="true"
-            android:textColor="@color/teal"
             android:background="@drawable/button_border2"
             android:onClick="accessLibrary"
             android:scaleType="fitCenter"
             android:src="@drawable/photo_library2"
-            android:textSize="30px"
-            android:text="Choose from library" />
+            android:text="Choose from library"
+            android:textColor="@color/teal"
+            android:textSize="30px" />
 
         <!--<ImageButton
                 android:id="@+id/map_icon"
@@ -93,38 +101,60 @@ android:textSize="30px"
                 android:src="@drawable/map_icon" />-->
 
 
-
-            <Button
-                android:id="@+id/info_button"
-                android:layout_width="84dp"
-                android:layout_height="69dp"
-                android:layout_marginTop="100dp"
-                android:layout_alignRight="@id/camera_button"
-                android:layout_alignBottom="@id/camera_button"
-                android:layout_marginRight="139dp"
-                android:layout_marginBottom="-400dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:onClick="activateInfoPage"
-                android:scaleType="fitCenter"
-                android:text="Info" />
-
-        <Button
+        <ImageButton
             android:id="@+id/about_button"
-            android:layout_width="84dp"
-            android:layout_height="69dp"
-            android:layout_alignLeft="@id/camera_button"
+            android:layout_width="46dp"
+            android:layout_height="31dp"
+            android:layout_alignRight="@id/camera_button"
             android:layout_alignBottom="@id/camera_button"
-            android:layout_marginLeft="139dp"
-            android:layout_marginBottom="-400dp"
+            android:layout_marginTop="100dp"
+
+            android:layout_marginRight="240dp"
+            android:layout_marginBottom="177dp"
             android:adjustViewBounds="true"
             android:background="@null"
             android:backgroundTint="@android:color/transparent"
             android:onClick="mainGotoAbout"
             android:scaleType="fitCenter"
-            android:text="About" />
+            android:src="@drawable/infologo"
+            android:text="Info" />
 
-            <!--<ImageButton
+
+        <ImageButton
+            android:id="@+id/info_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="86dp"
+            android:layout_alignLeft="@id/camera_button"
+            android:layout_alignBottom="@id/camera_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="33dp"
+            android:layout_marginBottom="-355dp"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:backgroundTint="@android:color/transparent"
+            android:onClick="activateInfoPage"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bookicon" />
+
+        <Button
+            android:id="@+id/icon_button"
+            android:layout_width="162dp"
+            android:layout_height="25dp"
+            android:layout_alignLeft="@id/camera_button"
+            android:layout_alignBottom="@id/camera_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="405dp"
+            android:layout_marginBottom="-380dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_border3"
+            android:onClick="activateInfoPage"
+            android:scaleType="fitCenter"
+            android:text="Read about Skin Cancer"
+            android:textColor="@color/purp"
+            android:textSize="5pt" />
+
+        <!--<ImageButton
          android:id="@+id/sharing_button"
          android:layout_width="65dp"
          android:layout_height="wrap_content"
