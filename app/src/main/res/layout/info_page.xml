@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcome_title"
             android:layout_alignParentStart="true"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:layout_alignParentEnd="true"
             android:alpha="0.8"
             android:layout_marginBottom="20dp"
@@ -59,7 +59,7 @@
             android:layout_marginBottom="20dp"
 
             android:fontFamily="sans-serif"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:textStyle="bold"
             android:text="Melanoma: A type of skin cancer that occurs when the pigment producing cells that give colour to the skin become cancerous. The most dangerous form of skin cancer, these cancerous growths develop when an unreparied DNA damage to skin cells trigger mutations."
             android:textColor="#000"
@@ -79,7 +79,7 @@
 
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:text="Actinic keratosis: A pre-cancerous area of thick, scaly, or crusty skin. These growths are more common for fair-skinned people frequently in the sun. "
             android:textColor="#000"
             android:textSize="18sp"
@@ -100,7 +100,7 @@
             android:textStyle="bold"
             android:text="Dermatofibroma: A common benign fibrous nodule often arises on the skin of the lower leg. Usually common among adults, more so in women."
             android:textColor="#000"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:textSize="18sp"
             android:padding="10dp"
             />
@@ -120,7 +120,7 @@
             android:text="Melanocytic Nevi: A tumor that contains nevus cells. The majority of moles appear during the first two decades of a peron's life."
             android:textColor="#000"
             android:textSize="18sp"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:padding="10dp"
             />
 
@@ -139,7 +139,7 @@
             android:text="Pyogenic granulomas: Are skin growths that are small, round and usually blood red in color. They tend to bleed because they contain a large number of blood vessels. These skin growths mainly develop in children and young adults. "
             android:textColor="#000"
             android:textSize="18sp"
-            android:background="@drawable/back"
+            android:background="@drawable/backbutton"
             android:padding="10dp"
             />
 
