@@ -61,6 +61,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import org.tensorflow.lite.examples.classification.customview.AutoFitTextureView;
 import org.tensorflow.lite.examples.classification.env.Logger;
+import com.derma.app.R;
 
 public class CameraConnectionFragment extends Fragment {
   private static final Logger LOGGER = new Logger();

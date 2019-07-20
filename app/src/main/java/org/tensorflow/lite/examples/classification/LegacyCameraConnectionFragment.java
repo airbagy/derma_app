@@ -36,6 +36,7 @@ import java.util.List;
 import org.tensorflow.lite.examples.classification.customview.AutoFitTextureView;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
+import com.derma.app.R;
 
 public class LegacyCameraConnectionFragment extends Fragment {
   private static final Logger LOGGER = new Logger();

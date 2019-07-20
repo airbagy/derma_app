@@ -38,7 +38,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.tensorflow.lite.examples.classification.R;
+import com.derma.app.R;
+
 import org.tensorflow.lite.examples.classification.ResultModel;
 import org.tensorflow.lite.examples.classification.env.BorderedText;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;

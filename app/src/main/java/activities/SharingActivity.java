@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.tensorflow.lite.examples.classification.R;
+import com.derma.app.R;
 
 import javax.mail.*;
 

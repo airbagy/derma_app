@@ -2,7 +2,6 @@ package activities;
 
 import android.app.Activity;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -21,19 +20,12 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import android.graphics.Bitmap;
 
-import org.tensorflow.lite.examples.classification.R;
 import org.tensorflow.lite.examples.classification.ResultModel;
+import org.tensorflow.lite.examples.classification.Stage;
 import org.tensorflow.lite.examples.classification.tflite.Classifier;
 
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.os.SystemClock;
-import android.widget.Toast;
+import com.derma.app.R;
 
-import java.util.List;
-
-import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Device;
 import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
@@ -55,84 +47,11 @@ public class MainActivity extends Activity {
     private int numThreads = -1;
     private ResultModel resultModel;
 
-
-//    private Bitmap convertBitmap(Bitmap bitmap){
-//        Bitmap converted = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
-//        Canvas canvas = new Canvas();
-//        canvas.setBitmap(converted);
-//        Paint paint = new Paint();
-//        paint.setFilterBitmap(true);
-//        canvas.drawBitmap(bitmap, 0, 0, paint);
-//        return converted;
-//    }
-//
-//    private Bitmap getRGB(Bitmap src){
-//        int [] colors = new int[src.getWidth() * src.getHeight()];
-//        src.getPixels(colors, 0, src.getWidth(), 0 ,0, src.getWidth(), src.getHeight());
-//        Bitmap result = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Config.ARGB_8888);
-//        result.setPixels(colors, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
-//        return result;
-//    }
-//
-//    protected void processImage(Bitmap image) {
-//        recreateClassifier(model, device, numThreads);
-//        Bitmap rgbBitmap = getRGB(image);
-//        Bitmap croppedBitmap = Bitmap.createBitmap(
-//                classifier.getImageSizeX(), classifier.getImageSizeY(), Config.ARGB_8888);
-//        Matrix frameToCropTransform = ImageUtils.getTransformationMatrix(
-//                image.getWidth(),
-//                image.getHeight(),
-//                classifier.getImageSizeX(),
-//                classifier.getImageSizeY(),
-//                0,
-//                true);
-//        Matrix cropToFrameTransform = new Matrix();
-//        frameToCropTransform.invert(cropToFrameTransform);
-//        Canvas canvas = new Canvas(croppedBitmap);
-//        canvas.drawBitmap(rgbBitmap, frameToCropTransform, null);
-//
-//        System.out.println("ProcessImage");
-//        if (classifier != null) {
-//            final long startTime = SystemClock.uptimeMillis();
-//            final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
-//            System.out.println(results);
-//        }
-//    }
-//
-//    private void recreateClassifier(Model model, Device device, int numThreads) {
-//        if (classifier != null) {
-//            LOGGER.d("Closing classifier.");
-//            classifier.close();
-//            classifier = null;
-//        }
-//        if (device == Device.GPU && model == Model.QUANTIZED) {
-//            LOGGER.d("Not creating classifier: GPU doesn't support quantized models.");
-//            runOnUiThread(
-//                    () -> {
-//                        Toast.makeText(this, "GPU does not yet supported quantized models.", Toast.LENGTH_LONG)
-//                                .show();
-//                    });
-//            return;
-//        }
-//        try {
-//            LOGGER.d(
-//                    "Creating classifier (model=%s, device=%s, numThreads=%d)", model, device, numThreads);
-//            classifier = Classifier.create(this, model, device, numThreads, Classifier.ClassifierType.CANCER);
-//        } catch (IOException e) {
-//            LOGGER.e(e, "Failed to create classifier.");
-//        }
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultModel = ResultModel.getInstance();
         setContentView(R.layout.main_menu);
-    }
-
-    public void activateCamera(View v) {
-        Intent intent = new Intent(this, ClassifierActivity.class);
-        startActivity(intent);
     }
 
     public void mainGotoAbout(View v) {
@@ -142,6 +61,16 @@ public class MainActivity extends Activity {
 
     public void accessSharing(View v){
         Intent intent = new Intent(this, SharingActivity.class);
+        startActivity(intent);
+    }
+
+    public void activateInfoPage(View v){
+        Intent intent = new Intent(this, InfoPageActivity.class);
+        startActivity(intent);
+    }
+
+    private void StartClassification(){
+        Intent intent = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
     }
 
@@ -181,73 +110,74 @@ public class MainActivity extends Activity {
         // Create a Uri from an intent string. Use the result to create an Intent.
         Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
 
-// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-// Make the Intent explicit by setting the Google Maps package
+
+        // Make the Intent explicit by setting the Google Maps package
         mapIntent.setPackage("com.google.android.apps.maps");
 
-// Attempt to start an activity that can handle the Intent
+        // Attempt to start an activity that can handle the Intent
         startActivity(mapIntent);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
+            Bitmap photo;
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    resultModel.setOriginal(data.getData(), photo);
+                    photo = (Bitmap) data.getExtras().get("data");
                     Intent intent = new Intent(this, ClassifierActivity.class);
-//                    sourceUri = getImageUri(getApplicationContext(),photo);
-//                    Log.d("imageURI",sourceUri.toString());
-//                    CropImage.activity(sourceUri)
-//                            .setAspectRatio(3,4)
-//                            .setGuidelines(CropImageView.Guidelines.ON)
-//                            .setBackgroundColor(Color.parseColor("#73666666"))
-//                            .start(this);
+                    sourceUri = getImageUri(getApplicationContext(), photo);
+                    resultModel.setOriginal(sourceUri, photo);
+                    resultModel.set_Cur_State(Stage.ORIGINAL);
 
-//                    processImage(photo);
-                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                    if (resultCode == RESULT_OK) {
-                        Uri resultUri = result.getUri();
+                    Log.d("imageURI",sourceUri.toString());
+                    CropImage.activity(sourceUri)
+                            .setAspectRatio(3,4)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setBackgroundColor(Color.parseColor("#73666666"))
+                            .start(this);
+                    break;
 
-                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                        Exception error = result.getError();
-                    }
                 case GALLERY_REQUEST_CODE:
                     if (data.getData() != null) {
                         try {
                             sourceUri = data.getData();
-                            Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                            photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
                                     sourceUri);
-                            resultModel.setOriginal(data.getData(), bmp);
-//                            File file = getImageFile();
-//                            Uri destinationUri = Uri.fromFile(file);
-
                             Log.d("imageURI",sourceUri.toString());
-                            intent = new Intent(this, ClassifierActivity.class);
-                            startActivity(intent);
-//                            CropImage.activity(sourceUri)
-//                                    .setAspectRatio(3,4)
-//                                    .setGuidelines(CropImageView.Guidelines.ON)
-//                                    .setBackgroundColor(Color.parseColor("#73666666"))
-//                                    .start(this);
+                            resultModel.setOriginal(sourceUri, photo);
+                            resultModel.set_Cur_State(Stage.ORIGINAL);
 
-//                            File file = new File(getPathFromURI(imageURI));
-////                            if (file.exists()) {
-////                                Log.d("EXISTS",imageURI.toString());
-////                            }
-
-//                            openCropActivity(sourceUri, sourceUri);
-                        } catch (Exception e) {
-
+                            CropImage.activity(sourceUri)
+                                    .setAspectRatio(3,4)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                    .start(this);
                         }
+                        catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    break;
 
-
-//                        Intent intent = new Intent(this, ClassifierActivity.class);
-//                        intent.putExtra("imageURI", imageURI.toString());
-//                        startActivity(intent);
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (resultCode == RESULT_OK) {
+                        Uri resultUri = result.getUri();
+                        try{
+                            photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                                    resultUri);
+                            resultModel.setCroppedUri(resultUri, photo);
+                            StartClassification();
+                        }
+                        catch(Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                        Exception error = result.getError();
                     }
                     break;
 

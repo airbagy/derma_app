@@ -9,7 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import org.tensorflow.lite.examples.classification.R;
+import com.derma.app.R;
+
 
 
 public class AboutActivity extends Activity {

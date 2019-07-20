@@ -97,14 +97,12 @@ public class ResultModel {
         return stage;
     }
 
-    public boolean set_Cur_State(Bitmap b, Uri org_uri) {
+    public boolean set_Cur_State(Stage stage) {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
             return false;
         }
-            uri_org = null;
-            img_org = null;
-            stage = Stage.ORIGINAL;
+            this.stage = stage;
 
         return true;
     }
