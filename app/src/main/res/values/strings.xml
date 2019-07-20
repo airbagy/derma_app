@@ -10,6 +10,59 @@
     <string name="nnapi">NNAPI</string>
     <string name="threads">Threads:</string>
 
+    <string name="InfoIntro">Learn about the Skin Conditions</string>
+    <string name="BasalCell">Basal cell carcinoma: A type of skin
+        cancer that begins with basal cells. This form typically
+        appears as a flesh-coloured bump with transparent borders on the skin,
+        sometimes with scars. The main cause is prolonged exposure to sunlight or UV rays.\n
+        Source: <a href="https://dermatology.ca/public-patients/skin/basal-cell-carcinoma/">
+            https://dermatology.ca/public-patients/skin/basal-cell-carcinoma
+        </a></string>
+    <string name="Melanoma">Melanoma: A type of skin cancer that
+        occurs when the pigment producing cells that give colour
+        to the skin become cancerous. The most dangerous form of
+        skin cancer, these cancerous growths develop when skin cell
+        DNA is damaged and trigger mutations. The main cause of melanoma is prolonged exposure
+        to sunlight or UV rays. People who are fair-skinned, who gets sunburns easily or have a family
+        history of melanoma are more likely to develop it.\n
+        Source: <a href="https://dermatology.ca/public-patients/skin/melanoma/">
+            https://dermatology.ca/public-patients/skin/melanoma
+        </a></string>
+    <string name="Keratosis">Actinic keratosis: A pre-cancerous area of thick,
+        scaly, or crusty skin. These growths usually develop after prolonged exposure to sunlight
+        or UV rays. They may develop into squamous cell carcinoma if left unchecked. People with
+        Actinic keratosis are also likely to develop basal cell carcinoma and melanoma.\n
+        Source: <a href="https://dermatology.ca/public-patients/skin/actinic-keratoses/">
+            https://dermatology.ca/public-patients/skin/actinic-keratoses
+        </a></string>
+    <string name="Dermatofibroma">Dermatofibroma: A common benign fibrous nodule often
+        arises on the skin of the lower leg. They are rarely painful and have no other ill effects
+        Dermatofibroma lumps do not away on their own; they can be surgically removed.\n
+        Source: <a href="https://www.health.harvard.edu/a_to_z/dermatofibroma-a-to-z/">
+            https://www.health.harvard.edu/a_to_z/dermatofibroma-a-to-z</a></string>
+    <string name="Melanocytic">Melanocytic Nevi: More commonly known as a mole, these growths
+        are composed of pigmented cells called melanocytes. They can be dark brown, yellow or
+        flesh-coloured. The vast majority of moles that a person has appears during childhood
+        and adolescence, though more may growth in adulthood. Most moles are benign, but some moles
+        can be cancerous and may develop into melanoma. These moles are called dysplastic nevi. They
+        are usually larger and more irregular than normal moles. They can be of mixed colours, are
+        usually and irregular shape and grow noticeably over time.\n
+        Source: <a href="https://www.health.harvard.edu/a_to_z/moles-nevi-a-to-z/">
+            https://www.health.harvard.edu/a_to_z/moles-nevi-a-to-z</a></string>
+    <string name="Pyogenic">Pyogenic granulomas: These are non-cancerous skin growths that are small,
+        round and usually blood red in color. They tend to bleed because they contain
+        a large number of blood vessels. These skin growths mainly develop in
+        children and young adults. The main cause is unknown, but they usually occur after
+        an injury, and are easily infected. They can be surgically removed.
+        Source: <a href="https://www.healthline.com/health/pyogenic-granuloma/">
+            https://www.healthline.com/health/pyogenic-granuloma</a></string>
+    <string name="Seborrheic">Seborrheic Keratoses: These are non-cancerous growths on the skin.
+        They usually have an oily, crusty look, and can be tan, brown or black in colour.
+        They are generally harmless, and are mostly found in the aging and elderly. They do not go
+        away on their own. They can be surgically removed.
+        Source: <a href="https://www.health.harvard.edu/a_to_z/seborrheic-keratoses-a-to-z/">
+            https://www.health.harvard.edu/a_to_z/seborrheic-keratoses-a-to-z</a></string>
+
     <string name="model">Model:</string>
     <string-array name="models">
         <item>Quantized</item>

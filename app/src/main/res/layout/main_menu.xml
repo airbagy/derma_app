@@ -33,7 +33,7 @@
             android:layout_marginTop="200dp"
             android:background="@null"
 
-            android:onClick="activateCamera"
+            android:onClick="processCameraImage"
             android:scaleType="fitCenter"
             android:src="@drawable/circle3__1562959607_97606__1562963806_16641" />
 
