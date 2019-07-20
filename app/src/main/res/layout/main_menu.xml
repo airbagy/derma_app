@@ -29,7 +29,7 @@
             android:layout_marginLeft="360dp"
             android:layout_marginTop="10dp"
             android:background="@null"
-            android:onClick="processCameraImage"
+            android:onClick="accessReceive"
             android:scaleType="fitCenter"
             android:src="@drawable/download"
             android:textSize="30px" />
