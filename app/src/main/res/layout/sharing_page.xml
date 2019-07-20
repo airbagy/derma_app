@@ -16,7 +16,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sharing" />
+            android:text="Sharing"
+            android:textSize="50px"/>
 
         <EditText
             android:id="@+id/send_address"
@@ -48,6 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="sendAction"
+            android:textColor="#fff"
+            android:background="@drawable/round_btn"
             android:text="Send" />
 
         <TextView
@@ -87,6 +90,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="recvAction"
+            android:textColor="#fff"
+            android:background="@drawable/round_btn"
             android:text="Receive" />
 
         <TextView

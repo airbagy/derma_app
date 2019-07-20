@@ -88,6 +88,22 @@ public class ResultModel {
         return obj.uri_cropped;
     }
 
+
+    public Bitmap get_Bitmap() throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
+
+        if (obj.img_cropped == null) {
+            IllegalStateException exp = new IllegalStateException("Cropped Bitmap not created");
+            throw exp;
+        }
+
+        return obj.img_cropped;
+    }
+
     public Stage get_Cur_State()  {
         if (obj == null) {
             IllegalStateException exp = new IllegalStateException("ResultModel has not been created");
@@ -127,6 +143,25 @@ public class ResultModel {
         }
 
         return obj;
+    }
+
+    public boolean set_Result(Dictionary fstage_result) throws IllegalStateException
+    {
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
+
+        try {
+            result = fstage_result;
+            stage = Stage.NV_ClASSIFIED;
+            return true;
+        } catch (Exception e) {
+            result = null;
+            stage = Stage.CROPPED;
+            throw e;
+        }
+
     }
 
     public boolean setOriginal(Uri org_uri, Bitmap org_img) throws IllegalStateException

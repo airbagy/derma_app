@@ -37,6 +37,26 @@
             android:fontFamily="casual"
             android:gravity="center_horizontal"
             android:textSize="18sp"/>
+<!--
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/welcome_title"
+            android:text="Instructions:1. To get a skin diagnosis, press the large camera button to take a photo."
+            android:textColor="#ffffff"
+            android:fontFamily="casual"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/welcome_title"
+            android:text="2. The same can be done through allowing access to your gallery to retrieve photos."
+            android:textColor="#ffffff"
+            android:fontFamily="casual"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"/>
+            -->
 
         <ImageButton
             android:layout_width="83dp"

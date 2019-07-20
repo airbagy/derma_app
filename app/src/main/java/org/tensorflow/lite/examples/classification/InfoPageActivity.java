@@ -40,6 +40,17 @@ public class InfoPageActivity extends Activity {
         startActivity(intent);
     }
 
+
+    private boolean clickInfo() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkSelfPermission(PERMISSION_CAMERA) == PackageManager.PERMISSION_GRANTED;
+        } else {
+            return true;
+        }
+    }
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (shouldShowRequestPermissionRationale(PERMISSION_CAMERA)) {

@@ -191,6 +191,7 @@ public class MainActivity extends Activity {
     }
 
     public String getStatusFromURI(Uri contentUri, Bitmap cropped_img, int resultCode) {
+
         if (resultCode == Activity.RESULT_OK) {
             String res = null;
             String[] proj = {MediaStore.Images.Media.DATA};
@@ -224,6 +225,11 @@ public class MainActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        //        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
+//        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
+//        m_intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
+//        startActivityForResult(m_intent, REQUEST_CAMERA_IMAGE);
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
             switch (requestCode) {
