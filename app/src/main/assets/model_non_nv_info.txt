@@ -1,0 +1,3 @@
+Model: model_non_nv
+Input: input_1
+Output: dense_1

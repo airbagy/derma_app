@@ -69,10 +69,12 @@
             android:layout_height="190dp"
             android:layout_below="@+id/welcome_title"
             android:gravity="center_horizontal"
+
             android:text="Collaborators\n\n\nDennis Duan\nStephen Lau\nOmar Qadri\nLishi Wang"
 
             android:textColor="#000"
             android:textSize="18sp" />
+
 
         <ImageButton
             android:layout_width="83dp"

@@ -1,16 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.tensorflow.lite.examples.classification">
+    package="com.derma.app">
 
     <uses-sdk />
 
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
-
 
     <application
         android:allowBackup="true"
@@ -20,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DisclaimerActivity"
+            android:name="com.derma.app.activities.DisclaimerActivity"
             android:label="@string/activity_name_classification"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -30,19 +27,22 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ClassifierActivity">
+        <activity android:name="com.derma.app.activities.ClassifierActivity">
         </activity>
 
-        <activity android:name=".AboutActivity">
+        <activity android:name="com.derma.app.activities.AboutActivity">
         </activity>
 
-        <activity android:name=".InfoPageActivity">
+        <activity android:name="com.derma.app.activities.InfoPageActivity">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.derma.app.activities.MainActivity">
         </activity>
 
-        <activity android:name=".SharingActivity">
+        <activity android:name="com.derma.app.activities.SharingActivity">
+        </activity>
+
+        <activity android:name="com.derma.app.activities.ResultActivity">
         </activity>
 
         <!--<activity-->
