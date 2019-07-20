@@ -9,7 +9,7 @@
         android:id="@+id/welcome_message_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/derma_project_bg"
+
         android:orientation="vertical"
         android:padding="16dp"
         android:alpha="0.8"
@@ -23,40 +23,20 @@
             android:layout_marginTop="16dp"
             android:text="Project Derma"
             android:gravity="center"
-            android:fontFamily="casual"
-            android:textColor="#ffffff"
+
+            android:textColor="#000"
             android:textSize="28sp"
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="378dp"
+            android:layout_height="190dp"
             android:layout_below="@+id/welcome_title"
+            android:gravity="center_horizontal"
             android:text="Collaborators\n\n\nDennis Duan\nStephen Lau\nOmar Qadri\nLishi Wang"
-            android:textColor="#ffffff"
-            android:fontFamily="casual"
-            android:gravity="center_horizontal"
-            android:textSize="18sp"/>
-<!--
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/welcome_title"
-            android:text="Instructions:1. To get a skin diagnosis, press the large camera button to take a photo."
-            android:textColor="#ffffff"
-            android:fontFamily="casual"
-            android:gravity="center_horizontal"
-            android:textSize="18sp"/>
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/welcome_title"
-            android:text="2. The same can be done through allowing access to your gallery to retrieve photos."
-            android:textColor="#ffffff"
-            android:fontFamily="casual"
-            android:gravity="center_horizontal"
-            android:textSize="18sp"/>
-            -->
+
+            android:textColor="#000"
+            android:textSize="18sp" />
 
         <ImageButton
             android:layout_width="83dp"
@@ -69,6 +49,45 @@
             android:background="@null"
             android:onClick="consentAction"
             android:scaleType="fitCenter"
-            android:src="@drawable/check" />
+            android:src="@drawable/check2" />
+
+        <!--<TextView
+            android:id="@+id/welcome_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Project Derma"
+            android:gravity="center"
+
+            android:textColor="#000"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="378dp"
+            android:layout_height="190dp"
+            android:layout_below="@+id/welcome_title"
+            android:gravity="center_horizontal"
+
+            android:text="Collaborators\n\n\nDennis Duan\nStephen Lau\nOmar Qadri\nLishi Wang"
+
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+
+        <ImageButton
+            android:layout_width="83dp"
+            android:layout_height="91dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+
+            android:adjustViewBounds="true"
+
+            android:background="@null"
+            android:onClick="consentAction"
+            android:scaleType="fitCenter"
+            android:src="@drawable/check2" />-->
+
     </RelativeLayout>
 </RelativeLayout>

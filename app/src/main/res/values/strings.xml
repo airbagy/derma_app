@@ -9,6 +9,9 @@
     <string name="tflite">tflite</string>
     <string name="nnapi">NNAPI</string>
     <string name="threads">Threads:</string>
+<<<<<<< HEAD
+    <string name="camera">Take a Photo</string>
+=======
 
     <string name="InfoIntro">Learn about the Skin Conditions</string>
     <string name="BasalCell">Basal cell carcinoma: A type of skin
@@ -63,6 +66,7 @@
         Source: <a href="https://www.health.harvard.edu/a_to_z/seborrheic-keratoses-a-to-z/">
             https://www.health.harvard.edu/a_to_z/seborrheic-keratoses-a-to-z</a></string>
 
+>>>>>>> 935b6fe25160f51150a9c02ae10bfbac413b3185
     <string name="model">Model:</string>
     <string-array name="models">
         <item>Quantized</item>

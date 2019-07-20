@@ -88,9 +88,6 @@ public class ResultActivity extends AppCompatActivity {
         if (condition == "Dermatofibroma"){
             infoView.setText(R.string.Dermatofibroma);
         }
-        if (condition == "Melanocytic nevi"){
-            infoView.setText(R.string.Melanocytic);
-        }
         if (condition == "Melanoma"){
             infoView.setText(R.string.Melanoma);
         }
