@@ -46,6 +46,9 @@
         <activity android:name="com.derma.app.activities.SharingActivity">
         </activity>
 
+        <activity android:name="com.derma.app.activities.ReceiveActivity">
+        </activity>
+
         <activity android:name="com.derma.app.activities.ResultActivity">
         </activity>
 

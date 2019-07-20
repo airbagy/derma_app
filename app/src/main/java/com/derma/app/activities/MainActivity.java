@@ -81,6 +81,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void accessReceive(View v){
+        Intent intent = new Intent(this, ReceiveActivity.class);
+        startActivity(intent);
+    }
+
     public void accessLibrary(View v){
         Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pictureIntent.setType("image/*");
