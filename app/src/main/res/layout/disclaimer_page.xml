@@ -28,33 +28,34 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="278dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="146dp"
             android:layout_below="@+id/welcome_title"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="35dp"
             android:alpha="0.8"
             android:background="@drawable/round_textbox"
             android:fontFamily="sans-serif"
-            android:textStyle="bold"
+            android:padding="10dp"
             android:text="By using this app, you are agreeing that you understand the app does not represent a diagnosis and that you understand all results are not proper diagnosis."
             android:textColor="#000"
             android:textSize="18sp"
-            android:padding="10dp"
-            />
+            android:textStyle="bold" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:layout_width="83dp"
+            android:layout_height="91dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@drawable/round_btn"
-            android:fontFamily="casual"
+
+            android:adjustViewBounds="true"
+
+            android:background="@null"
             android:onClick="consentAction"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Got It"
-            android:textColor="#fff" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/check" />
     </RelativeLayout>
 </RelativeLayout>
