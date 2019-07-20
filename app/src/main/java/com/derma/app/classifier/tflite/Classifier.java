@@ -103,10 +103,10 @@ public abstract class Classifier {
     if (classifier == ClassifierType.CANCER){
       if (model == Model.QUANTIZED) {
 //      return new ClassifierQuantizedMobileNet(activity, device, numThreads);
-        return new ClassifierSkinDetNet(activity, device, numThreads);
+        return new ClassifierNonNVDetNet(activity, device, numThreads);
       } else {
 //      return new ClassifierFloatMobileNet(activity, device, numThreads);
-        return new ClassifierSkinDetNet(activity, device, numThreads);
+        return new ClassifierNonNVDetNet(activity, device, numThreads);
       }
     }
     else{
