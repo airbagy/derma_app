@@ -1,8 +1,10 @@
 package com.derma.app.activities;
 
+import android.Manifest;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,10 +32,15 @@ import com.derma.app.classifier.tflite.Classifier.Device;
 import com.derma.app.classifier.tflite.Classifier.Model;
 
 import android.content.Context;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity {
 
+    public static final int GRANT_CAMERA_PERMISSION = 1;
     public static final int GALLERY_REQUEST_CODE = 0;
     private String currentPhotoPath = "";
     private String imageFilePath = "";
@@ -86,10 +93,51 @@ public class MainActivity extends Activity {
     }
 
     public void processCameraImage(View v) {
-        Intent cameraIntent = new
-                Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.CAMERA)) {
+//                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//            else {
+//                // No explanation needed; request the permission
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.CAMERA},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//        }
+//        else{
+//            Intent cameraIntent = new
+//                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+//        }
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case GRANT_CAMERA_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent cameraIntent = new
+                            Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                }
+                else {
+                    Intent intent = new Intent(this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                return;
+            }
+        }
+    }
+
 
     public String getStatusFromURI(Uri contentUri, Bitmap cropped_img, int resultCode) {
 
@@ -122,11 +170,6 @@ public class MainActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        //        Intent m_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        File file = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
-//        Uri uri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider", file);
-//        m_intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, uri);
-//        startActivityForResult(m_intent, REQUEST_CAMERA_IMAGE);
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
             Bitmap photo;
@@ -232,56 +275,4 @@ public class MainActivity extends Activity {
         currentPhotoPath = "file:" + file.getAbsolutePath();
         return file;
     }
-
 }
-
-//    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
-//        UCrop.Options options = new UCrop.Options();
-//        options.setCircleDimmedLayer(true);
-//        options.setCropFrameColor(ContextCompat.getColor(this, R.color.colorAccent));
-//        UCrop.of(sourceUri, destinationUri)
-//                .withMaxResultSize(100, 100)
-//                .withAspectRatio(5f, 5f)
-//                .start(this);
-//    }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        if (resultCode == Activity.RESULT_OK) {
-//            switch (requestCode) {
-//                case GALLERY_REQUEST_CODE:
-//                    System.out.println("gallery");
-//                    System.out.println(data.getData());
-//                    if (data.getData() != null) {
-//                        Uri imageURI = data.getData();
-//                        try {
-//                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-//                            CropImage.activity(imageURI)
-//                                    .start(this);
-//                            processImage(bitmap);
-//                        }
-//                        catch (Exception e){
-//                            System.out.println("Cannot process image");
-//                        }
-////                        String path = null;
-////                        String [] files = {MediaStore.MediaColumns.DATA};
-////                        Cursor cursor = getContentResolver().query(imageURI, files, null, null, null);
-////                        if (cursor.moveToFirst()) {
-////                            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-////                           path = cursor.getString(column_index);
-////                        }
-////                        BitmapFactory.Options options = new BitmapFactory.Options();
-////                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-////                        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-////                        processImage(bitmap);
-////                        cursor.close();
-//                    }
-//                    break;
-//
-//                case CAMERA_REQUEST_CODE:
-//                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-//                    processImage(photo);
-//            }
-//
-//            resultmodel_img  = image_status.getOriginalBitmap();
-//        }
-//    }
