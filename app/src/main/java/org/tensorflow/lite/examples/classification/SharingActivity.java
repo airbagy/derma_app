@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.crypto.*;
 import javax.crypto.spec.*;
+import javax.mail.internet.MimeMultipart;
 
 
 public class SharingActivity extends Activity {
@@ -23,6 +25,8 @@ public class SharingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sharing_page);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public void sendAction(View v) {
@@ -119,17 +123,36 @@ public class SharingActivity extends Activity {
     }
 
     private String recvEmail(String address, String password, String subject) throws Exception {
+        /*
         String host = "pop.gmail.com";
         Properties properties = new Properties();
 
         properties.put("mail.pop3.host", host);
         properties.put("mail.pop3.port", "995");
         properties.put("mail.pop3.starttls.enable", "true");
-        Session emailSession = Session.getDefaultInstance(properties);
+        Session session = Session.getDefaultInstance(properties);
 
-        Store store = emailSession.getStore("pop3s");
+        Store store = session.getStore("pop3s");
 
         store.connect(host, address, password);
+        */
+
+
+        Properties properties = new Properties();
+
+        properties.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.setProperty("mail.pop3.socketFactory.fallback", "false");
+        properties.setProperty("mail.pop3.port", "995");
+        properties.setProperty("mail.pop3.socketFactory.port", "995");
+
+        URLName url = new URLName("pop3", "pop.gmail.com", 995, "",
+                "recent:" + address, password);
+
+        Session session = Session.getInstance(properties, null);
+        Store store = session.getStore(url);
+        store.connect();
+
+
         Folder emailFolder = store.getFolder("INBOX");
         emailFolder.open(Folder.READ_ONLY);
 
@@ -143,11 +166,15 @@ public class SharingActivity extends Activity {
     }
 
     private String recvMessage(Message[] messages, int maxLen, String subject) throws Exception {
-        int len = Math.min(maxLen, messages.length);
-        for (int i = 0; i < len; i++) {
+        int numMessages = messages.length;
+        int len = Math.min(maxLen, numMessages);
+        for (int i = numMessages - len; i < numMessages; i++) {
             Message message = messages[i];
-            if (message.getSubject().equals(subject)) {
-                return message.getContent().toString();
+            String messageSubject = message.getSubject();
+            if (messageSubject.equals(subject)) {
+                MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+                String result = (String) (mimeMultipart.getBodyPart(0).getContent());
+                return result;
             }
         }
         return null;
