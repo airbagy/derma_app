@@ -9,7 +9,7 @@
     <string name="tflite">tflite</string>
     <string name="nnapi">NNAPI</string>
     <string name="threads">Threads:</string>
-
+    <string name="camera">Take a Photo</string>
     <string name="model">Model:</string>
     <string-array name="models">
         <item>Quantized</item>
