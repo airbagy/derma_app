@@ -153,18 +153,6 @@
             android:text="Read about Skin Cancer"
             android:textColor="@color/purp"
             android:textSize="5pt" />
-
-        <!--<ImageButton
-         android:id="@+id/sharing_button"
-         android:layout_width="65dp"
-         android:layout_height="wrap_content"
-
-         android:adjustViewBounds="true"
-         android:background="@null"
-         android:onClick="accessSharing"
-         android:scaleType="fitCenter"
-         android:src="@drawable/sharing_icon" />-->
-
-
+        
     </RelativeLayout>
 </RelativeLayout>
