@@ -3,11 +3,13 @@ package com.derma.app.activities;
 import android.Manifest;
 import android.app.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.net.Uri;
 import android.util.Log;
@@ -37,6 +39,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.ByteArrayOutputStream;
+
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.TextView;
+
 
 public class MainActivity extends Activity {
 
@@ -93,25 +100,46 @@ public class MainActivity extends Activity {
     }
 
     public void processCameraImage(View v) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        GRANT_CAMERA_PERMISSION);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("For best result, lease take the photo in a well-lighted place!")
+                .setTitle("Important")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
             }
-            else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        GRANT_CAMERA_PERMISSION);
-            }
-        }
-        else{
-            Intent cameraIntent = new
-                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-        }
+        });
+        dialog.show();
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//            else {
+//                // No explanation needed; request the permission
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//        }
+//        else{
+//            Intent cameraIntent = new
+//                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+//        }
 //        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
@@ -173,6 +201,11 @@ public class MainActivity extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
             Bitmap photo;
+            Activity act;
+            LayoutInflater factory;
+            View view;
+            AlertDialog dialog;
+
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
                     photo = (Bitmap) data.getExtras().get("data");
@@ -182,12 +215,35 @@ public class MainActivity extends Activity {
                     resultModel.setUri_org(sourceUri);
                     resultModel.setStage(Stage.ORIGINAL);
 
-                    Log.d("imageURI",sourceUri.toString())  ;
-                    CropImage.activity(sourceUri)
-                            .setAspectRatio(3,4)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setBackgroundColor(Color.parseColor("#73666666"))
-                            .start(this);
+                    Log.d("imageURI",sourceUri.toString());
+
+                    act = this;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    factory = LayoutInflater.from(this);
+                    view = factory.inflate(R.layout.alert_dialog, null);
+                    builder.setView(view)
+                            .setMessage("Please make sure the area of lesion is in the center grid!")
+                            .setTitle("Important")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    CropImage.activity(sourceUri)
+                                            .setAspectRatio(3,4)
+                                            .setGuidelines(CropImageView.Guidelines.ON)
+                                            .setBackgroundColor(Color.parseColor("#73666666"))
+                                            .start(act);
+                                }
+                            });
+
+                    dialog = builder.create();
+                    dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface arg0) {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
+                        }
+                    });
+                    dialog.show();
                     break;
 
                 case GALLERY_REQUEST_CODE:
@@ -201,11 +257,40 @@ public class MainActivity extends Activity {
                             resultModel.setUri_org(sourceUri);
                             resultModel.setStage(Stage.ORIGINAL);
 
-                            CropImage.activity(sourceUri)
-                                    .setAspectRatio(3,4)
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .setBackgroundColor(Color.parseColor("#73666666"))
-                                    .start(this);
+                            act = this;
+                            builder = new AlertDialog.Builder(this);
+                            factory = LayoutInflater.from(this);
+                            view = factory.inflate(R.layout.alert_dialog, null);
+                            builder.setView(view)
+                                    .setMessage("Please make sure the area of lesion is in the center grid!")
+                                    .setTitle("Important")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // if this button is clicked, just close
+                                            // the dialog box and do nothing
+                                            CropImage.activity(sourceUri)
+                                                    .setAspectRatio(3,4)
+                                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                                    .start(act);
+                                        }
+                                    });
+
+                            dialog = builder.create();
+                            dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface arg0) {
+                                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
+                                }
+                            });
+                            dialog.show();
+
+//                            TextView titleView = (TextView) dialog.findViewById(android.R.id.title);
+//                            titleView.setTextSize(16);
+//                            TextView msgView = (TextView) dialog.findViewById(android.R.id.message);
+//                            msgView.setTextSize(16);
+//                            Button btn1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+//                            btn1.setTextSize(16);
                         }
                         catch (Exception e) {
                             System.out.println(e.getMessage());
