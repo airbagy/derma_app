@@ -30,43 +30,65 @@
 
     </LinearLayout>
 
-
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:background="@null"
+        android:layout_gravity="center|bottom">
 
-        <ImageButton
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="40dp"
-            android:background="@null"
-            android:onClick="ShareActivity"
-            android:src="@drawable/email" />
+        <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp" >
 
-        <ImageButton
-            android:id="@+id/saveresult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="103dp"
-            android:layout_toEndOf="@+id/menu"
-            android:background="@null"
-            android:onClick="saveResult"
-            android:src="@drawable/saveresult2" />
+            <ImageButton
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@null"
+                android:onClick="ShareActivity"
+                android:src="@drawable/email" />
 
-        <ImageButton
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
-            android:background="@null"
-            android:onClick="MainMenu"
-            android:src="@drawable/backbutton" />
+            <ImageButton
+                android:id="@+id/saveresult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:onClick="saveResult"
+                android:src="@drawable/saveresult2" />
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@null"
+                android:onClick="MainMenu"
+                android:src="@drawable/backbutton" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="66dp"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:orientation="horizontal">-->
+
+
+    <!--</RelativeLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
