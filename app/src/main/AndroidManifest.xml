@@ -31,7 +31,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.derma.app.activities.ClassifierActivity">
+        <activity android:name="com.derma.app.activities.ClassifierActivity"
+            android:noHistory="true">
         </activity>
 
         <activity android:name="com.derma.app.activities.AboutActivity">
@@ -40,13 +41,16 @@
         <activity android:name="com.derma.app.activities.InfoPageActivity">
         </activity>
 
-        <activity android:name="com.derma.app.activities.MainActivity">
+        <activity android:name="com.derma.app.activities.MainActivity"
+            android:noHistory="true">
         </activity>
 
-        <activity android:name="com.derma.app.activities.SharingActivity">
+        <activity android:name="com.derma.app.activities.SharingActivity"
+            android:noHistory="true">
         </activity>
 
-        <activity android:name="com.derma.app.activities.ReceiveActivity">
+        <activity android:name="com.derma.app.activities.ReceiveActivity"
+            android:noHistory="true">
         </activity>
 
         <activity android:name="com.derma.app.activities.ResultActivity"
@@ -54,7 +58,8 @@
         </activity>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+            android:theme="@style/Base.Theme.AppCompat"
+            android:noHistory="true"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.derma.app.fileprovider"

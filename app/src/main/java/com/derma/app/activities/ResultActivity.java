@@ -1,6 +1,7 @@
 package com.derma.app.activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.WrapperListAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -175,28 +178,17 @@ public class ResultActivity extends AppCompatActivity {
         AlertDialog dialog;
         AlertDialog.Builder builder;
         LayoutInflater factory;
+        Context ctx = this;
 
         builder = new AlertDialog.Builder(this);
         factory = LayoutInflater.from(this);
         builder.setTitle("Save Results?")
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(),
-                                ll.getHeight(), Bitmap.Config.ARGB_8888);
-                        Canvas canvas = new Canvas(bitmap);
-                        ll.draw(canvas);
-                        try{
-                            File resultFile = createImageFile();
-                            FileOutputStream os = new FileOutputStream(resultFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-                            os.flush();
-                            os.close();
-                            Uri resultUri = Uri.fromFile(resultFile);
-                            resultModel.setResultImageUri(resultUri);
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                            System.out.println(e.getMessage());
+                        if(saveImage()){
+                            Toast.makeText(ctx, "Results Saved!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ctx, "Save Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -213,5 +205,35 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    private boolean saveImage() {
+        Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(),
+                ll.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        ll.draw(canvas);
+        try{
+            File resultFile = createImageFile();
+            FileOutputStream os = new FileOutputStream(resultFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+            Uri resultUri = Uri.fromFile(resultFile);
+            resultModel.setResultImageUri(resultUri);
+            if (!resultFile.exists()){
+                return false;
+            }
+            return true;
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }
