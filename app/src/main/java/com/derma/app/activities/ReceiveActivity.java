@@ -80,20 +80,8 @@ public class ReceiveActivity extends Activity {
     }
 
     private String recvEmail(String address, String password, String subject) throws Exception {
-        /*
-        String host = "pop.gmail.com";
-        Properties properties = new Properties();
 
-        properties.put("mail.pop3.host", host);
-        properties.put("mail.pop3.port", "995");
-        properties.put("mail.pop3.starttls.enable", "true");
-        Session session = Session.getDefaultInstance(properties);
-
-        Store store = session.getStore("pop3s");
-
-        store.connect(host, address, password);
-        */
-
+        String host = "pop." + address.substring(address.indexOf("@") + 1);
 
         Properties properties = new Properties();
 
@@ -102,7 +90,7 @@ public class ReceiveActivity extends Activity {
         properties.setProperty("mail.pop3.port", "995");
         properties.setProperty("mail.pop3.socketFactory.port", "995");
 
-        URLName url = new URLName("pop3", "pop.gmail.com", 995, "",
+        URLName url = new URLName("pop3", host, 995, "",
                 "recent:" + address, password);
 
         Session session = Session.getInstance(properties, null);
