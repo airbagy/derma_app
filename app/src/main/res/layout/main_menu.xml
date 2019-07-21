@@ -12,6 +12,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+
         <ImageButton
             android:id="@+id/camera_icon"
             android:layout_width="80dp"
