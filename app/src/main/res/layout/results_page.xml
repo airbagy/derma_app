@@ -15,7 +15,6 @@
             android:padding="16dp"
             android:visibility="visible">
 
-
             <TextView
                 android:id="@+id/welcome_title"
                 android:layout_width="fill_parent"
