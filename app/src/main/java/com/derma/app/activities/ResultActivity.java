@@ -221,7 +221,6 @@ public class ResultActivity extends AppCompatActivity {
         lp.gravity = Gravity.CENTER;
         lp.setMargins(10,10,10,10);
         iv.setLayoutParams(lp);
-        iv.setBackgroundResource(R.drawable.imageview_border_white);
         iv.setImageBitmap(resultModel.getImg_cropped());
 
         Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(),
