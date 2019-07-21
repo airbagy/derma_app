@@ -30,10 +30,10 @@
 
         <TextView
             android:layout_width="378dp"
-            android:layout_height="190dp"
+            android:layout_height="430dp"
             android:layout_below="@+id/welcome_title"
             android:gravity="center_horizontal"
-            android:text="Collaborators\n\n\nDennis Duan\nStephen Lau\nOmar Qadri\nLishi Wang"
+            android:text="Collaborators\n\n\nDennis Duan\nStephen Lau\nOmar Qadri\nLishi Wang\n\nThe dataset we are using is the HAM10000 dataset developed by Tschandl, Rosendahl and Kittler. The dataset has 10015 total records with 53.3% of pathologic verification. All the images are preprocessed with manual luminance correction and manual cropping. The dataset includes the seven types of skin cancer, and is used to train a two-stage classifier. The accuracy is 90% for the first stage and 70% for the second stage."
 
             android:textColor="#000"
             android:textSize="18sp" />
