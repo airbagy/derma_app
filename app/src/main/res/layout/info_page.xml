@@ -15,10 +15,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:alpha="0.8"
-            android:background="@drawable/derma_project_bg"
+
             android:orientation="vertical"
             android:padding="16dp"
-            android:visibility="visible">
+            android:visibility="visible"
+            >
 
             <TextView
                 android:id="@+id/welcome_title"
@@ -29,20 +30,38 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="@string/InfoIntro"
-                android:textColor="#ffffff"
+                android:textColor="#000"
+
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/first_info"
-                android:layout_width="278dp"
+                android:id="@+id/first_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="20dp"
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Basal Cell Carcinoma"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/first_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/BasalCell"
@@ -52,14 +71,31 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/second_info"
-                android:layout_width="278dp"
+                android:id="@+id/second_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Melanoma"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/second_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Melanoma"
@@ -69,14 +105,32 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/third_info"
-                android:layout_width="278dp"
+                android:id="@+id/third_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Actinic Keratosis"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/third_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Keratosis"
@@ -86,14 +140,31 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/fourth_info"
-                android:layout_width="278dp"
+                android:id="@+id/fourth_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Dermatofibroma"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/fourth_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Dermatofibroma"
@@ -103,14 +174,32 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/fifth_info"
-                android:layout_width="278dp"
+                android:id="@+id/fifth_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Melanoytic Nevi"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fifth_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Melanocytic"
@@ -120,14 +209,31 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/sixth_info"
-                android:layout_width="278dp"
+                android:id="@+id/sixth_t"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Pyogenic Granulomas"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sixth_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:alpha="0.8"
+                android:autoLink="web"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Pyogenic"
@@ -137,14 +243,31 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/seven_t"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+
+                android:alpha="0.8"
+                android:autoLink="web"
+
+                android:fontFamily="sans-serif"
+                android:padding="10dp"
+                android:text="Seborrheic Keratoses"
+                android:textColor="#000"
+                android:textColorLink="#0000ff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
                 android:id="@+id/seven_info"
-                android:layout_width="278dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:alpha="0.8"
                 android:autoLink="web"
-                android:background="@drawable/round_textbox"
+                android:background="@drawable/back"
                 android:fontFamily="sans-serif"
                 android:padding="10dp"
                 android:text="@string/Seborrheic"

@@ -6,5 +6,6 @@
     <color name="orange">#FFA500</color>
     <color name="teal">#6ac5fe</color>
     <color name="purp">#ac68cc</color>
+    <color name="black">#000</color>
     <color name="semi_transparent">#66000000</color>
 </resources>

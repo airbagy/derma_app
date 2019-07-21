@@ -17,6 +17,8 @@ import android.util.Log;
 import java.io.File;
 import android.provider.MediaStore;
 import android.os.Build;
+
+import java.io.FileOutputStream;
 import java.io.IOException;
 import android.os.Environment;
 
@@ -114,10 +116,10 @@ public class MainActivity extends Activity {
         Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pictureIntent.setType("image/*");
         pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
-            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
+//            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+//        }
         startActivityForResult(pictureIntent, GALLERY_REQUEST_CODE);
     }
 
@@ -136,7 +138,7 @@ public class MainActivity extends Activity {
                                 if (cameraIntent.resolveActivity(getPackageManager()) != null){
                                     File capture = null;
                                     try {
-                                        capture = createImageFile(false);
+                                        capture = createImageFile();
                                     }
                                     catch (IOException e){
                                         e.printStackTrace();
@@ -159,54 +161,7 @@ public class MainActivity extends Activity {
             }
         });
         dialog.show();
-
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                        GRANT_CAMERA_PERMISSION);
-//            }
-//            else {
-//                // No explanation needed; request the permission
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                        GRANT_CAMERA_PERMISSION);
-//            }
-//        }
-//        else{
-//            Intent cameraIntent = new
-//                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-//        }
-//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case GRANT_CAMERA_PERMISSION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent cameraIntent = new
-                            Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (cameraIntent.resolveActivity(getPackageManager()) != null){
-                        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-                    }
-                }
-                else {
-                    Intent intent = new Intent(this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                return;
-            }
-        }
-    }
-
 
     public String getStatusFromURI(Uri contentUri, Bitmap cropped_img, int resultCode) {
 
@@ -289,11 +244,6 @@ public class MainActivity extends Activity {
                                 }
                             });
                             dialog.show();
-//                            CropImage.activity(captureUri)
-//                                    .setAspectRatio(3,4)
-//                                    .setGuidelines(CropImageView.Guidelines.ON)
-//                                    .setBackgroundColor(Color.parseColor("#73666666"))
-//                                    .start(this);
                         }
                         catch (Exception e){
                             e.printStackTrace();
@@ -341,13 +291,6 @@ public class MainActivity extends Activity {
                                 }
                             });
                             dialog.show();
-
-//                            TextView titleView = (TextView) dialog.findViewById(android.R.id.title);
-//                            titleView.setTextSize(16);
-//                            TextView msgView = (TextView) dialog.findViewById(android.R.id.message);
-//                            msgView.setTextSize(16);
-//                            Button btn1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-//                            btn1.setTextSize(16);
                         }
                         catch (Exception e) {
                             e.printStackTrace();
@@ -379,7 +322,6 @@ public class MainActivity extends Activity {
                         Exception error = result.getError();
                     }
                     break;
-
             }
         }
     }
@@ -403,29 +345,20 @@ public class MainActivity extends Activity {
         return res;
     }
 
-    private File createImageFile(boolean results) throws IOException {
+    private File createImageFile() throws IOException {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(date);
         String imageFileName = "sample_" + timeStamp;
         String storageDirectory;
         File storageDir;
-        if (results){
-            storageDirectory =  Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES).toString() + "/Derma_Results";
-            storageDir = new File(storageDirectory);
-            if (!storageDir.exists()){
-                storageDir.mkdir();
-            }
-        }
-        else{
-            storageDirectory =  Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES).toString() + "/Derma_Samples";
 
-            storageDir = new File(storageDirectory);
-            if (!storageDir.exists()){
-                storageDir.mkdir();
-            }
+        storageDirectory =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .toString() + "/Derma_Samples";
+
+        storageDir = new File(storageDirectory);
+        if (!storageDir.exists()){
+            storageDir.mkdir();
         }
 
         File image = File.createTempFile(

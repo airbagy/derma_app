@@ -4,45 +4,51 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:alpha="0.8"
-    android:background="@drawable/derma_project_bg">
+    >
 
     <LinearLayout
         android:layout_width="243dp"
         android:layout_height="545dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sharing"
+            android:textColor="@color/black"
             android:textSize="50px"/>
 
         <EditText
             android:id="@+id/send_address"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address" />
+            android:hint="Email Address"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/send_subject"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Subject" />
+            android:hint="Subject"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/send_message"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Message" />
+            android:hint="Message"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/send_code"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Code"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/send_button"

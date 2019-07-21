@@ -16,7 +16,7 @@ public class ResultModel {
     private Bitmap img_org = null;
     private Bitmap img_cropped = null;
     private Stage stage = Stage.ORIGINAL;
-
+    private Uri resultImageUri = null;
 
     public Stage getStage()
     {
@@ -219,6 +219,22 @@ public class ResultModel {
         return cancerResult;
     }
 
+    public void setResultImageUri(Uri uri){
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
+        resultImageUri = uri;
+    }
+
+    public Uri getResultImageUri(){
+        if (obj == null) {
+            IllegalStateException exp = new IllegalStateException("Instance of ResultModel has not been created");
+            throw exp;
+        }
+        return resultImageUri;
+    }
+
     public void clearResultModel() throws IllegalStateException
     {
         uri_org = null;
@@ -228,5 +244,6 @@ public class ResultModel {
         img_org = null;
         img_cropped = null;
         stage = Stage.ORIGINAL;
+        resultImageUri = null;
     }
 }

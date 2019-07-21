@@ -4,43 +4,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:alpha="0.8"
-    android:background="@drawable/derma_project_bg">
+    >
 
     <LinearLayout
         android:layout_width="243dp"
         android:layout_height="545dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Receive"
-            android:textSize="50px"/>
+            android:textSize="50px"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/recv_address"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address" />
+            android:hint="Email Address"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/recv_password"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/recv_subject"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Subject" />
+            android:hint="Subject"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/recv_code"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Code"
             android:inputType="textPassword" />
