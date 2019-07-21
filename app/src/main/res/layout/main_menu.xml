@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    >
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -14,7 +15,9 @@
             android:layout_height="wrap_content"
             android:stretchColumns="*">
 
-            <TableRow android:background="#aec" android:layout_marginTop="10dp">
+            <TableRow
+                android:layout_marginTop="10dp"
+                >
                 <RelativeLayout android:layout_width="match_parent">
                     <ImageButton
                         android:id="@+id/about_button"
@@ -30,18 +33,18 @@
 
                     <ImageButton
                         android:id="@+id/download"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="46dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentRight="true"
                         android:background="@null"
                         android:onClick="accessReceive"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/download"
+                        android:src="@drawable/download_button"
                         android:textSize="30px" />
                 </RelativeLayout>
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="40dp">
 
                 <ImageButton
                     android:id="@+id/camera_icon"
@@ -52,11 +55,12 @@
                     android:src="@drawable/rsz_camera" />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="10dp">
+
                 <Button
                     android:id="@+id/camera_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="116dp"
+                    android:layout_height="50px"
                     android:layout_gravity="center"
                     android:background="@drawable/button_border"
                     android:onClick="processCameraImage"
@@ -66,7 +70,7 @@
                     android:textSize="12sp" />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow  android:layout_marginTop="60dp">
                 <ImageButton
                     android:id="@+id/library_icon"
                     android:layout_width="80dp"
@@ -78,19 +82,22 @@
                     android:text="Library" />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow  android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/library_button"
                     android:background="@drawable/button_border2"
                     android:onClick="accessLibrary"
+                    android:layout_width="116dp"
+                    android:layout_height="50px"
                     android:scaleType="fitCenter"
                     android:src="@drawable/photo_library2"
                     android:text="Choose a photo"
                     android:textColor="@color/teal"
-                    android:textSize="12sp" />
+                    android:textSize="10sp"
+                    android:layout_gravity="center" />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="60dp">
                 <ImageButton
                     android:id="@+id/info_icon"
                     android:layout_width="80dp"
@@ -99,42 +106,27 @@
                     android:backgroundTint="@android:color/transparent"
                     android:onClick="activateInfoPage"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/bookicon" />
+                    android:src="@drawable/bookicon"
+                    />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
+            <TableRow  android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/icon_button"
                     android:background="@drawable/button_border3"
                     android:onClick="activateInfoPage"
                     android:scaleType="fitCenter"
-                    android:text="Read about Skin Cancer"
+                    android:text="About Skin Cancer"
                     android:textColor="@color/purp"
-                    android:textSize="12sp" />
+                    android:textSize="10sp"
+                    android:layout_width="116dp"
+                    android:layout_height="40px"
+
+                    android:src="@drawable/photo_library2"
+
+                    android:layout_gravity="center" />
             </TableRow>
 
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
-                <ImageButton
-                    android:id="@+id/info_icon2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@null"
-                    android:backgroundTint="@android:color/transparent"
-                    android:onClick="activateInfoPage"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/bookicon" />
-            </TableRow>
-
-            <TableRow android:background="#eec" android:layout_marginTop="10dp">
-                <Button
-                    android:id="@+id/icon_button2"
-                    android:background="@drawable/button_border3"
-                    android:onClick="activateInfoPage"
-                    android:scaleType="fitCenter"
-                    android:text="Learn About Conditions"
-                    android:textColor="@color/purp"
-                    android:textSize="12sp" />
-            </TableRow>
 
         </TableLayout>
 
