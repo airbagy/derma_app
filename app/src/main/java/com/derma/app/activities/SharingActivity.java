@@ -4,10 +4,15 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.security.*;
+import java.util.Arrays;
+import javax.crypto.*;
+import javax.crypto.spec.*;
 import com.derma.app.R;
 
 
@@ -25,26 +30,16 @@ public class SharingActivity extends Activity {
         String message = ((EditText)findViewById(R.id.send_message)).getText().toString();
         String code = ((EditText)findViewById(R.id.send_code)).getText().toString();
 
-        sendEmail(address, subject, message);
+        String encodedMessage = encodeString(message, code);
+
+        sendEmail(address, subject, encodedMessage);
 
         TextView result = (TextView)findViewById(R.id.send_result);
         result.setText("Sent " + subject);
 
     }
 
-    public void recvAction(View v) {
-        String address = ((EditText)findViewById(R.id.recv_address)).getText().toString();
-        String password = ((EditText)findViewById(R.id.recv_password)).getText().toString();
-        String subject = ((EditText)findViewById(R.id.recv_subject)).getText().toString();
-        String code = ((EditText)findViewById(R.id.recv_code)).getText().toString();
-
-        recvEmail(address, password, subject);
-
-        TextView result = (TextView)findViewById(R.id.recv_result);
-        result.setText("Received " + subject);
-    }
-
-    public void sendEmail(String address, String subject, String message) {
+    private void sendEmail(String address, String subject, String message) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{ address });
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
@@ -57,8 +52,28 @@ public class SharingActivity extends Activity {
         startActivity(Intent.createChooser(intent, "Choose an email client:"));
     }
 
-    public void recvEmail(String address, String password, String subject) {
-        return;
+    private String encodeString(String str, String code) {
+        try {
+            Key key = generateKey(code);
+            Cipher c = Cipher.getInstance("AES");
+            c.init(Cipher.ENCRYPT_MODE, key);
+            byte[] encValue = c.doFinal(str.getBytes());
+            return encodeString64(encValue);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static Key generateKey(String code) throws Exception {
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] keyBytes = sha.digest(code.getBytes("UTF-8"));
+        keyBytes = Arrays.copyOf(keyBytes, 16);
+        Key key = new SecretKeySpec(keyBytes, "AES");
+        return key;
+    }
+
+    private String encodeString64(byte[] bytes) {
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
 }

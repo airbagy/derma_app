@@ -16,49 +16,48 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sharing"
+            android:text="Receive"
             android:textSize="50px"/>
 
         <EditText
-            android:id="@+id/send_address"
+            android:id="@+id/recv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Email Address" />
 
         <EditText
-            android:id="@+id/send_subject"
+            android:id="@+id/recv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/recv_subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Subject" />
 
         <EditText
-            android:id="@+id/send_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Message" />
-
-        <EditText
-            android:id="@+id/send_code"
+            android:id="@+id/recv_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Code"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/send_button"
+            android:id="@+id/recv_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="sendAction"
+            android:onClick="recvAction"
             android:textColor="#fff"
             android:background="@drawable/round_btn"
-            android:text="Send" />
+            android:text="Receive" />
 
         <TextView
-            android:id="@+id/send_result"
+            android:id="@+id/recv_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No result" />
-
-
     </LinearLayout>
 </RelativeLayout>
