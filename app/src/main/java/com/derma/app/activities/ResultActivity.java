@@ -1,13 +1,19 @@
 package com.derma.app.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,8 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.derma.app.R;
 
 import com.derma.app.classifier.ResultModel;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,6 +62,7 @@ public class ResultActivity extends AppCompatActivity {
         int ivheight = (int) (150 * scale);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ivwidth, ivheight);
         lp.gravity = Gravity.CENTER;
+        lp.setMargins(10,10,10,10);
         iv.setLayoutParams(lp);
 
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -60,6 +70,7 @@ public class ResultActivity extends AppCompatActivity {
 
         TextView resultView = new TextView(getApplicationContext());
         TextView infoView = new TextView(getApplicationContext());
+        lp.setMargins(10, 10, 10, 10);
 
         String text = "Your Nevi results were: ";
         String condition = "";
@@ -86,7 +97,7 @@ public class ResultActivity extends AppCompatActivity {
         resultView.setBackgroundResource(R.drawable.round_textbox);
         resultView.setText(text);
         resultView.setLayoutParams(lp);
-        resultView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        resultView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         resultView.setTextColor(Color.BLACK);
         resultView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         resultView.setGravity(Gravity.CENTER);
@@ -115,7 +126,7 @@ public class ResultActivity extends AppCompatActivity {
             infoView.setText(R.string.Pyogenic);
         }
         infoView.setLayoutParams(lp);
-        infoView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        infoView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         infoView.setTextColor(Color.BLACK);
         infoView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
         infoView.setGravity(Gravity.CENTER);
@@ -139,7 +150,7 @@ public class ResultActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(date);
-        String imageFileName = "sample_" + timeStamp;
+        String imageFileName = "derma_result_" + timeStamp;
         String storageDirectory;
         File storageDir;
 
@@ -158,5 +169,49 @@ public class ResultActivity extends AppCompatActivity {
 
         resultPath = image.getAbsolutePath();
         return image;
+    }
+
+    public void saveResult(View v) {
+        AlertDialog dialog;
+        AlertDialog.Builder builder;
+        LayoutInflater factory;
+
+        builder = new AlertDialog.Builder(this);
+        factory = LayoutInflater.from(this);
+        builder.setTitle("Save Results?")
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(),
+                                ll.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(bitmap);
+                        ll.draw(canvas);
+                        try{
+                            File resultFile = createImageFile();
+                            FileOutputStream os = new FileOutputStream(resultFile);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                            os.flush();
+                            os.close();
+                            Uri resultUri = Uri.fromFile(resultFile);
+                            resultModel.setResultImageUri(resultUri);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+        dialog = builder.create();
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
+            }
+        });
+        dialog.show();
     }
 }

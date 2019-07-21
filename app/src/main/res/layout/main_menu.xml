@@ -74,7 +74,7 @@
             android:onClick="accessLibrary"
             android:scaleType="fitCenter"
             android:src="@drawable/photo_library2"
-            android:text="Choose from library"
+            android:text="Choose a Photo"
             android:textColor="@color/teal"
             android:textSize="30px" />
 
@@ -128,7 +128,7 @@
             android:background="@drawable/button_border3"
             android:onClick="activateInfoPage"
             android:scaleType="fitCenter"
-            android:text="Read about Skin Cancer"
+            android:text="Learn About Conditions"
             android:textColor="@color/purp"
             android:textSize="5pt" />
         
