@@ -3,12 +3,14 @@ package com.derma.app.activities;
 import android.Manifest;
 import android.app.Activity;
 
+import android.content.DialogInterface;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.net.Uri;
 import android.util.Log;
@@ -36,8 +38,6 @@ import com.derma.app.classifier.tflite.Classifier.Model;
 
 import android.content.Context;
 
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureConfig;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -49,6 +49,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
+
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.TextView;
+
 
 public class MainActivity extends Activity {
 
@@ -116,25 +121,66 @@ public class MainActivity extends Activity {
         startActivityForResult(pictureIntent, GALLERY_REQUEST_CODE);
     }
 
+
     public void processCameraImage(View v) {
-        Intent cameraIntent = new
-                Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        if (cameraIntent.resolveActivity(getPackageManager()) != null){
-            File capture = null;
-            try {
-                capture = createImageFile(false);
+        Context ctxt = this.getApplicationContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("For best result, lease take the photo in a well-lighted place!")
+                .setTitle("Important")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                Intent cameraIntent = new
+                                        Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (cameraIntent.resolveActivity(getPackageManager()) != null){
+                                    File capture = null;
+                                    try {
+                                        capture = createImageFile(false);
+                                    }
+                                    catch (IOException e){
+                                        e.printStackTrace();
+                                        System.out.println("Could not create image file.");
+                                    }
+                                    if (capture != null){
+                                        captureUri = FileProvider.getUriForFile(ctxt,
+                                                "com.derma.app.fileprovider", capture);
+                                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, captureUri);
+                                        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                                    }
+                                }
+                            }
+                        });
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
             }
-            catch (IOException e){
-                e.printStackTrace();
-                System.out.println("Could not create image file.");
-            }
-            if (capture != null){
-                captureUri = FileProvider.getUriForFile(this,
-                        "com.derma.app.fileprovider", capture);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, captureUri);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-            }
-        }
+        });
+        dialog.show();
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//            else {
+//                // No explanation needed; request the permission
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        GRANT_CAMERA_PERMISSION);
+//            }
+//        }
+//        else{
+//            Intent cameraIntent = new
+//                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+//        }
+//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -196,8 +242,15 @@ public class MainActivity extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             Uri sourceUri;
             Bitmap photo;
+            Activity act;
+            LayoutInflater factory;
+            View view;
+            AlertDialog dialog;
+            AlertDialog.Builder builder;
+
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
+
                     if (captureUri != null){
                         try{
                             photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
@@ -207,12 +260,40 @@ public class MainActivity extends Activity {
                             resultModel.setUri_org(captureUri);
                             resultModel.setStage(Stage.ORIGINAL);
 
-                            Log.d("imageURI",captureUri.toString())  ;
-                            CropImage.activity(captureUri)
-                                    .setAspectRatio(3,4)
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .setBackgroundColor(Color.parseColor("#73666666"))
-                                    .start(this);
+                            Log.d("imageURI",captureUri.toString());
+
+                            act = this;
+                            builder = new AlertDialog.Builder(this);
+                            factory = LayoutInflater.from(this);
+                            view = factory.inflate(R.layout.alert_dialog, null);
+                            builder.setView(view)
+                                    .setMessage("Please make sure the area of lesion is in the center grid!")
+                                    .setTitle("Important")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // if this button is clicked, just close
+                                            // the dialog box and do nothing
+                                            CropImage.activity(captureUri)
+                                                    .setAspectRatio(3,4)
+                                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                                    .start(act);
+                                        }
+                                    });
+
+                            dialog = builder.create();
+                            dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface arg0) {
+                                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
+                                }
+                            });
+                            dialog.show();
+//                            CropImage.activity(captureUri)
+//                                    .setAspectRatio(3,4)
+//                                    .setGuidelines(CropImageView.Guidelines.ON)
+//                                    .setBackgroundColor(Color.parseColor("#73666666"))
+//                                    .start(this);
                         }
                         catch (Exception e){
                             e.printStackTrace();
@@ -220,7 +301,6 @@ public class MainActivity extends Activity {
 
                         }
                     }
-
                     break;
 
                 case GALLERY_REQUEST_CODE:
@@ -234,11 +314,40 @@ public class MainActivity extends Activity {
                             resultModel.setUri_org(sourceUri);
                             resultModel.setStage(Stage.ORIGINAL);
 
-                            CropImage.activity(sourceUri)
-                                    .setAspectRatio(3,4)
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .setBackgroundColor(Color.parseColor("#73666666"))
-                                    .start(this);
+                            act = this;
+                            builder = new AlertDialog.Builder(this);
+                            factory = LayoutInflater.from(this);
+                            view = factory.inflate(R.layout.alert_dialog, null);
+                            builder.setView(view)
+                                    .setMessage("Please make sure the area of lesion is in the center grid!")
+                                    .setTitle("Important")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // if this button is clicked, just close
+                                            // the dialog box and do nothing
+                                            CropImage.activity(sourceUri)
+                                                    .setAspectRatio(3,4)
+                                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                                    .start(act);
+                                        }
+                                    });
+
+                            dialog = builder.create();
+                            dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface arg0) {
+                                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#87CEFA"));
+                                }
+                            });
+                            dialog.show();
+
+//                            TextView titleView = (TextView) dialog.findViewById(android.R.id.title);
+//                            titleView.setTextSize(16);
+//                            TextView msgView = (TextView) dialog.findViewById(android.R.id.message);
+//                            msgView.setTextSize(16);
+//                            Button btn1 = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+//                            btn1.setTextSize(16);
                         }
                         catch (Exception e) {
                             e.printStackTrace();
