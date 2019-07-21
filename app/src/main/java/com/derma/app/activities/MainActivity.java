@@ -3,6 +3,7 @@ package com.derma.app.activities;
 import android.Manifest;
 import android.app.Activity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,6 +17,8 @@ import android.provider.MediaStore;
 import android.os.Build;
 import java.io.IOException;
 import android.os.Environment;
+
+import com.sun.mail.imap.protocol.ENVELOPE;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -33,10 +36,19 @@ import com.derma.app.classifier.tflite.Classifier.Model;
 
 import android.content.Context;
 
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureConfig;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
+import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class MainActivity extends Activity {
 
@@ -52,6 +64,10 @@ public class MainActivity extends Activity {
     private Bitmap resultmodel_img = null;
     private int numThreads = -1;
     private ResultModel resultModel;
+    private Uri captureUri;
+    private String[] permissions = new String [] {Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +75,9 @@ public class MainActivity extends Activity {
         resultModel = ResultModel.getInstance();
         resultModel.clearResultModel();
         setContentView(R.layout.main_menu);
+        if (!hasNoPermissions()){
+            ActivityCompat.requestPermissions(this, permissions, 0);
+        }
     }
 
     public void mainGotoAbout(View v) {
@@ -94,31 +113,28 @@ public class MainActivity extends Activity {
             String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
             pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         }
-        startActivityForResult(Intent.createChooser(pictureIntent, "Select Picture"), GALLERY_REQUEST_CODE);
+        startActivityForResult(pictureIntent, GALLERY_REQUEST_CODE);
     }
 
     public void processCameraImage(View v) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        GRANT_CAMERA_PERMISSION);
+        Intent cameraIntent = new
+                Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null){
+            File capture = null;
+            try {
+                capture = createImageFile(false);
             }
-            else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        GRANT_CAMERA_PERMISSION);
+            catch (IOException e){
+                e.printStackTrace();
+                System.out.println("Could not create image file.");
+            }
+            if (capture != null){
+                captureUri = FileProvider.getUriForFile(this,
+                        "com.derma.app.fileprovider", capture);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, captureUri);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
             }
         }
-        else{
-            Intent cameraIntent = new
-                    Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
-        }
-//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
     @Override
@@ -131,7 +147,9 @@ public class MainActivity extends Activity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent cameraIntent = new
                             Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                    if (cameraIntent.resolveActivity(getPackageManager()) != null){
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+                    }
                 }
                 else {
                     Intent intent = new Intent(this,MainActivity.class);
@@ -180,19 +198,29 @@ public class MainActivity extends Activity {
             Bitmap photo;
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
-                    photo = (Bitmap) data.getExtras().get("data");
-                    Intent intent = new Intent(this, ClassifierActivity.class);
-                    sourceUri = getImageUri(getApplicationContext(), photo);
-                    resultModel.setImg_org(photo);
-                    resultModel.setUri_org(sourceUri);
-                    resultModel.setStage(Stage.ORIGINAL);
+                    if (captureUri != null){
+                        try{
+                            photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                                    captureUri);
+                            Intent intent = new Intent(this, ClassifierActivity.class);
+                            resultModel.setImg_org(photo);
+                            resultModel.setUri_org(captureUri);
+                            resultModel.setStage(Stage.ORIGINAL);
 
-                    Log.d("imageURI",sourceUri.toString())  ;
-                    CropImage.activity(sourceUri)
-                            .setAspectRatio(3,4)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setBackgroundColor(Color.parseColor("#73666666"))
-                            .start(this);
+                            Log.d("imageURI",captureUri.toString())  ;
+                            CropImage.activity(captureUri)
+                                    .setAspectRatio(3,4)
+                                    .setGuidelines(CropImageView.Guidelines.ON)
+                                    .setBackgroundColor(Color.parseColor("#73666666"))
+                                    .start(this);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println("Could not find image");
+
+                        }
+                    }
+
                     break;
 
                 case GALLERY_REQUEST_CODE:
@@ -213,7 +241,11 @@ public class MainActivity extends Activity {
                                     .start(this);
                         }
                         catch (Exception e) {
+                            e.printStackTrace();
                             System.out.println(e.getMessage());
+                            Intent intent = new Intent(this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                     break;
@@ -262,22 +294,52 @@ public class MainActivity extends Activity {
         return res;
     }
 
-    private File getImageFile() throws IOException {
-        String imageFileName = "JPEG_" + System.currentTimeMillis() + "_";
-        File storageDir = new File(
-                Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DCIM
-                ), "Camera"
+    private File createImageFile(boolean results) throws IOException {
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HH:mm:ss").format(date);
+        String imageFileName = "sample_" + timeStamp;
+        String storageDirectory;
+        File storageDir;
+        if (results){
+            storageDirectory =  Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES).toString() + "/Derma_Results";
+            storageDir = new File(storageDirectory);
+            if (!storageDir.exists()){
+                storageDir.mkdir();
+            }
+        }
+        else{
+            storageDirectory =  Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES).toString() + "/Derma_Samples";
+
+            storageDir = new File(storageDirectory);
+            if (!storageDir.exists()){
+                storageDir.mkdir();
+            }
+        }
+
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
         );
-        System.out.println(storageDir.getAbsolutePath());
-        if (storageDir.exists())
-            System.out.println("File exists");
-        else
-            System.out.println("File not exists");
-        File file = File.createTempFile(
-                imageFileName, ".jpg", storageDir
-        );
-        currentPhotoPath = "file:" + file.getAbsolutePath();
-        return file;
+
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private boolean hasNoPermissions(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

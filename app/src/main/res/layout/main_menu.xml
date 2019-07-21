@@ -33,6 +33,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/download"
             android:textSize="30px" />
+
         <Button
             android:id="@+id/camera_button"
             android:layout_width="162dp"
@@ -45,15 +46,6 @@
             android:text="@string/camera"
             android:textColor="@color/orange"
             android:textSize="30px" />
-
-        <!--  <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/mybutton"
-            android:text="Buttons" />-->
 
 
         <ImageButton
@@ -85,20 +77,6 @@
             android:text="Choose from library"
             android:textColor="@color/teal"
             android:textSize="30px" />
-
-        <!--<ImageButton
-                android:id="@+id/map_icon"
-                android:layout_width="65dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/library_button"
-                android:layout_centerHorizontal="true"
-                android:layout_marginRight="13dp"
-                android:layout_marginBottom="-106dp"
-                android:adjustViewBounds="true"
-                android:background="@null"
-                android:onClick="accessMaps"
-                android:scaleType="fitCenter"
-                android:src="@drawable/map_icon" />-->
 
 
         <ImageButton
