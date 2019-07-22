@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class ReceiveActivity extends Activity {
 
     private static final int PICKFILE_CODE = 1001;
 
-    private String secretCode = null;
+    private String imageString = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,21 @@ public class ReceiveActivity extends Activity {
         setContentView(R.layout.receive_page);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        findViewById(R.id.recv_extras).setVisibility(View.GONE);
+        EditText editText = ((EditText)findViewById(R.id.recv_code));
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    //Clear focus here from edittext
+                    editText.clearFocus();
+                }
+                return false;
+            }
+        });
     }
 
     public void recvAction(View v) {
-        String code = ((EditText)findViewById(R.id.recv_code)).getText().toString();
-        secretCode = code;
-
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
         intent.setType("text/*");
         startActivityForResult(intent, PICKFILE_CODE);
@@ -58,16 +69,31 @@ public class ReceiveActivity extends Activity {
                     Uri uri = resultIntent.getData();
                     InputStream stream = getContentResolver().openInputStream(uri);
                     byte[] bytes = readBytes(stream);
-                    String str = new String(bytes, "UTF-8");
-                    byte[] data = decodeString(str, secretCode);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    ImageView iv = (ImageView) findViewById(R.id.recv_result);
-                    iv.setImageBitmap(bitmap);
+                    imageString = new String(bytes, "UTF-8");
+                    findViewById(R.id.recv_extras).setVisibility(View.VISIBLE);
+                    ((EditText)findViewById(R.id.recv_code)).requestFocus();
                 }
             }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void decodeAction(View v) {
+        findViewById(R.id.recv_decode).requestFocus();
+        String code = ((EditText)findViewById(R.id.recv_code)).getText().toString();
+        byte[] data = decodeString(imageString, code);
+        if (data == null) {
+            ((TextView)findViewById(R.id.recv_codelabel)).setText("Invalid code");
+            ImageView iv = (ImageView) findViewById(R.id.recv_result);
+            iv.setImageDrawable(null);
+        } else {
+            ((TextView)findViewById(R.id.recv_codelabel)).setText("");
+            ((EditText)findViewById(R.id.recv_code)).clearFocus();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            ImageView iv = (ImageView) findViewById(R.id.recv_result);
+            iv.setImageBitmap(bitmap);
         }
     }
 
