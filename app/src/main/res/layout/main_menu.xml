@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -80,13 +80,7 @@
                 android:stretchColumns="*"
                 android:layout_gravity="center_vertical">
 
-                <TableRow android:layout_marginTop="100dp">
-
-                    <RelativeLayout android:layout_width="match_parent"></RelativeLayout>
-                </TableRow>
-
                 <TableRow>
-
                     <ImageButton
                         android:id="@+id/camera_icon"
                         android:layout_width="80dp"
@@ -96,7 +90,8 @@
                         android:src="@drawable/rsz_camera" />
                 </TableRow>
 
-                <TableRow android:layout_marginTop="10dp">
+                <TableRow
+                    android:layout_marginTop="10dp">
 
                     <Button
                         android:id="@+id/camera_button"
@@ -111,11 +106,12 @@
                         android:textSize="16dp" />
                 </TableRow>
 
-                <TableRow android:layout_marginTop="60dp">
+                <TableRow
+                    android:layout_marginTop="50dp">
 
                     <ImageButton
                         android:id="@+id/library_icon"
-                        android:layout_width="80dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="80dp"
                         android:background="@null"
                         android:onClick="accessLibrary"
@@ -140,7 +136,7 @@
                         android:textSize="16dp"/>
                 </TableRow>
 
-                <TableRow android:layout_marginTop="60dp">
+                <TableRow android:layout_marginTop="50dp">
 
                     <ImageButton
                         android:id="@+id/info_icon"
@@ -169,13 +165,8 @@
                         android:textSize="16dp" />
                 </TableRow>
 
-                <TableRow android:layout_marginTop="50dp">
-
-                </TableRow>
-
-
             </TableLayout>
 
         </ScrollView>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
