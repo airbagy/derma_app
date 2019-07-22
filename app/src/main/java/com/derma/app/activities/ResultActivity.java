@@ -64,6 +64,12 @@ public class ResultActivity extends AppCompatActivity {
 
     private String code;
 
+    private TextView classifierResult;
+
+    private TextView infoView;
+
+    private ImageView iv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +82,11 @@ public class ResultActivity extends AppCompatActivity {
         Map<String, Float> nvResults = resultModel.getNvResult();
         Map<String, Float> cancerResults = resultModel.getCancerResult();
 
-        ImageView iv = new ImageView(getApplicationContext());
+        iv = new ImageView(getApplicationContext());
         iv.setImageBitmap(resultModel.getImg_cropped());
         final float scale = getResources().getDisplayMetrics().density;
-        int ivwidth  = (int) (200 * scale);
-        int ivheight = (int) (150 * scale);
+        int ivwidth  = (int) (400 * 0.6 * scale);
+        int ivheight = (int) (300 * 0.6 * scale);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ivwidth, ivheight);
         lp.gravity = Gravity.CENTER;
         lp.setMargins(10,10,10,10);
@@ -89,8 +95,8 @@ public class ResultActivity extends AppCompatActivity {
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        TextView resultView = new TextView(getApplicationContext());
-        TextView infoView = new TextView(getApplicationContext());
+        classifierResult = new TextView(getApplicationContext());
+        infoView = new TextView(getApplicationContext());
         lp.setMargins(10, 10, 10, 10);
 
         String text = "Your Nevi results were: ";
@@ -115,13 +121,13 @@ public class ResultActivity extends AppCompatActivity {
             text += "Since your Melanocytic Nevi confidence was high, your skin" +
                     " likely has a benign mole, or no averse conditions!";
         }
-        resultView.setBackgroundResource(R.drawable.round_textbox);
-        resultView.setText(text);
-        resultView.setLayoutParams(lp);
-        resultView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        resultView.setTextColor(Color.BLACK);
-        resultView.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-        resultView.setGravity(Gravity.CENTER);
+        classifierResult.setBackgroundResource(R.drawable.round_textbox);
+        classifierResult.setText(text);
+        classifierResult.setLayoutParams(lp);
+        classifierResult.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        classifierResult.setTextColor(Color.BLACK);
+        classifierResult.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+        classifierResult.setGravity(Gravity.CENTER);
 
         infoView.setBackgroundResource(R.drawable.round_textbox);
 
@@ -153,7 +159,7 @@ public class ResultActivity extends AppCompatActivity {
         infoView.setGravity(Gravity.CENTER);
 
         ll.addView(iv);
-        ll.addView(resultView);
+        ll.addView(classifierResult);
         ll.addView(infoView);
     }
 
@@ -295,6 +301,15 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private boolean saveImage() {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        final float scale = getResources().getDisplayMetrics().density;
+        lp.gravity = Gravity.CENTER;
+        lp.setMargins(10,10,10,10);
+        iv.setLayoutParams(lp);
+        iv.setImageBitmap(resultModel.getImg_cropped());
+
         Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(),
                 ll.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -307,6 +322,14 @@ public class ResultActivity extends AppCompatActivity {
             os.close();
             Uri resultUri = Uri.fromFile(resultFile);
             resultModel.setResultImageUri(resultUri);
+            int ivwidth  = (int) (400 * 0.6 * scale);
+            int ivheight = (int) (300 * 0.6 * scale);
+            lp = new LinearLayout.LayoutParams(ivwidth, ivheight);
+            lp.gravity = Gravity.CENTER;
+            lp.setMargins(10,10,10,10);
+            iv.setLayoutParams(lp);
+            iv.setImageBitmap(resultModel.getImg_cropped());
+
             if (!resultFile.exists()){
                 return false;
             }

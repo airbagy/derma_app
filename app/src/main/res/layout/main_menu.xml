@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:orientation="vertical">
 
     <RelativeLayout
@@ -11,6 +13,7 @@
         android:alpha="0.8"
         android:orientation="vertical"
         android:visibility="visible">
+
 
         <ImageButton
             android:id="@+id/camera_icon"
@@ -134,3 +137,211 @@
         
     </RelativeLayout>
 </RelativeLayout>
+=======
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:background="#fff"
+            android:layout_gravity="center|bottom"
+            android:alpha="0.8"
+            app:elevation="40dp">
+
+            <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.8"
+                android:background="#C2C5CC"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="10dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="5dp">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:stretchColumns="0,1,2"
+                    >
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+
+                <ImageButton
+                    android:id="@+id/about_butfton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:onClick="mainGotoAbout"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/infologo"
+                    />
+
+                        <ImageButton
+                            android:id="@+id/logo_img"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@null"
+                            android:backgroundTint="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/dermalogo" />
+
+                        <ImageButton
+                            android:id="@+id/download"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="60dp"
+
+                            android:background="@null"
+                            android:onClick="accessReceive"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/download_button"
+                             />
+                    </TableRow>
+        </TableLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginTop="65dp"
+
+
+    >
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow android:layout_marginTop="100dp">
+
+                <RelativeLayout android:layout_width="match_parent">
+
+
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/camera_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@null"
+                    android:onClick="processCameraImage"
+                    android:src="@drawable/rsz_camera" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/camera_button"
+                    android:layout_width="116dp"
+                    android:layout_height="50px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_border"
+                    android:onClick="processCameraImage"
+                    android:scaleType="fitCenter"
+                    android:text="@string/camera"
+                    android:textColor="@color/orange"
+                    android:textSize="9dp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="60dp">
+
+                <ImageButton
+                    android:id="@+id/library_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@null"
+                    android:onClick="accessLibrary"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/gallery_blue"
+                    android:text="Library" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/library_button"
+                    android:layout_width="116dp"
+                    android:layout_height="50px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_border2"
+                    android:onClick="accessLibrary"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/photo_library2"
+                    android:text="Choose a photo"
+                    android:textColor="@color/teal"
+                    android:textSize="9sp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="60dp">
+
+                <ImageButton
+                    android:id="@+id/info_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:onClick="activateInfoPage"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bookicon" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/icon_button"
+                    android:layout_width="116dp"
+                    android:layout_height="40px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_border3"
+                    android:onClick="activateInfoPage"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/photo_library2"
+                    android:text="About Skin Cancer"
+
+                    android:textColor="@color/purp"
+
+                    android:textSize="8dp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="50dp">
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </ScrollView>
+</LinearLayout>
+</RelativeLayout>
+>>>>>>> origin/tablelayout
