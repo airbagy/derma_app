@@ -6,59 +6,91 @@
     android:orientation="vertical"
     android:gravity="center"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
 
-        >
 
-        <TableLayout
+        <com.google.android.material.appbar.AppBarLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="*">
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:background="#fff"
+            android:layout_gravity="center|bottom"
+            android:alpha="0.8"
+            app:elevation="40dp">
 
-            <TableRow android:background="#90CAF9"
-                >
+            <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.8"
+                android:background="#C2C5CC"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetEnd="0dp"
+                android:contentInsetRight="0dp"
+                app:contentInsetEnd="10dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="5dp">
 
-                <RelativeLayout android:layout_height="55dp">
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:stretchColumns="0,1,2"
+                    >
 
-                    <ImageButton
-                        android:id="@+id/about_butfton"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentLeft="true"
-                        android:background="@null"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="@android:color/transparent"
-                        android:onClick="mainGotoAbout"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/infologo"
-                        android:text="Info" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
 
-                    <ImageButton
-                        android:id="@+id/download"
-                        android:layout_width="46dp"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@null"
-                        android:layout_marginRight="10dp"
-                        android:onClick="accessReceive"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/download_button"
-                        android:textSize="30px" />
-                </RelativeLayout>
-            </TableRow>
+                <ImageButton
+                    android:id="@+id/about_butfton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@null"
+                    android:backgroundTint="@android:color/transparent"
+                    android:onClick="mainGotoAbout"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/infologo"
+                    />
+
+                        <ImageButton
+                            android:id="@+id/logo_img"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@null"
+                            android:backgroundTint="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/dermalogo" />
+
+                        <ImageButton
+                            android:id="@+id/download"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="60dp"
+
+                            android:background="@null"
+                            android:onClick="accessReceive"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/download_button"
+                             />
+                    </TableRow>
         </TableLayout>
 
-    </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="65dp"
 
 
     >
