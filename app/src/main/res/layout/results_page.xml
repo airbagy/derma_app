@@ -15,6 +15,8 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+
+
         <TextView
             android:id="@+id/welcome_title"
             android:layout_width="fill_parent"
@@ -86,14 +88,5 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="66dp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:orientation="horizontal">-->
-
-
-    <!--</RelativeLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
