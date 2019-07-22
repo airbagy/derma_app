@@ -105,6 +105,7 @@ public class MainActivity extends Activity {
     private void StartClassification(){
         Intent intent = new Intent(this, ClassifierActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void accessReceive(View v){
@@ -116,10 +117,6 @@ public class MainActivity extends Activity {
         Intent pictureIntent = new Intent(Intent.ACTION_GET_CONTENT);
         pictureIntent.setType("image/*");
         pictureIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            String[] mimeTypes = new String[]{"image/jpeg", "image/png"};
-//            pictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-//        }
         startActivityForResult(pictureIntent, GALLERY_REQUEST_CODE);
     }
 
@@ -177,20 +174,6 @@ public class MainActivity extends Activity {
             return "firststagedone";
         }
         return "incomplete";
-    }
-
-    public void accessMaps(View v) {
-        // Create a Uri from an intent string. Use the result to create an Intent.
-        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
-
-        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-
-        // Make the Intent explicit by setting the Google Maps package
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-        // Attempt to start an activity that can handle the Intent
-        startActivity(mapIntent);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
