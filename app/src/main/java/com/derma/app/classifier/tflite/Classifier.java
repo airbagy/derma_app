@@ -60,7 +60,7 @@ public abstract class Classifier {
   }
 
   /** Number of results to show in the UI. */
-  private static final int MAX_RESULTS = 3;
+  private static final int MAX_RESULTS = 6;
 
   /** Dimensions of inputs. */
   private static final int DIM_BATCH_SIZE = 1;

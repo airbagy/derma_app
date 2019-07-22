@@ -100,15 +100,15 @@
 
                     <Button
                         android:id="@+id/camera_button"
-                        android:layout_width="116dp"
-                        android:layout_height="50px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button_border"
                         android:onClick="processCameraImage"
                         android:scaleType="fitCenter"
-                        android:text="@string/camera"
+                        android:text=" Take a Photo "
                         android:textColor="@color/orange"
-                        android:textSize="9dp" />
+                        android:textSize="16dp" />
                 </TableRow>
 
                 <TableRow android:layout_marginTop="60dp">
@@ -128,16 +128,16 @@
 
                     <Button
                         android:id="@+id/library_button"
-                        android:layout_width="116dp"
-                        android:layout_height="50px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button_border2"
                         android:onClick="accessLibrary"
                         android:scaleType="fitCenter"
                         android:src="@drawable/photo_library2"
-                        android:text="Choose a photo"
+                        android:text=" Choose a photo "
                         android:textColor="@color/teal"
-                        android:textSize="9sp" />
+                        android:textSize="16dp"/>
                 </TableRow>
 
                 <TableRow android:layout_marginTop="60dp">
@@ -157,18 +157,16 @@
 
                     <Button
                         android:id="@+id/icon_button"
-                        android:layout_width="116dp"
-                        android:layout_height="40px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@drawable/button_border3"
                         android:onClick="activateInfoPage"
                         android:scaleType="fitCenter"
                         android:src="@drawable/photo_library2"
-                        android:text="About Skin Cancer"
-
+                        android:text="Learn About\n Common Conditions "
                         android:textColor="@color/purp"
-
-                        android:textSize="8dp" />
+                        android:textSize="16dp" />
                 </TableRow>
 
                 <TableRow android:layout_marginTop="50dp">

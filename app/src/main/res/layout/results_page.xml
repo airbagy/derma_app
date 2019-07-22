@@ -28,7 +28,7 @@
             android:text="Classifier Results"
             android:textColor="#000"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -44,7 +44,7 @@
 
         <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
-            android:background="#fff"
+            android:background="#FFD700"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentInsetLeft="0dp"
@@ -59,30 +59,33 @@
 
             <ImageButton
                 android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="end"
                 android:background="@null"
                 android:onClick="ShareActivity"
-                android:src="@drawable/email" />
+                android:src="@drawable/share_button"
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/saveresult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:background="@null"
                 android:onClick="saveResult"
-                android:src="@drawable/saveresult2" />
+                android:src="@drawable/save_button"
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="start"
                 android:background="@null"
                 android:onClick="MainMenu"
-                android:src="@drawable/backbutton" />
+                android:src="@drawable/back_button"
+                android:scaleType="fitCenter"/>
 
         </androidx.appcompat.widget.Toolbar>
 
