@@ -99,9 +99,9 @@ public class ResultActivity extends AppCompatActivity {
         infoView = new TextView(getApplicationContext());
         lp.setMargins(10, 10, 10, 10);
 
-        String text = "Your Nevi results were: ";
+        String text = "Your Nevi results were: \n";
         String condition = "";
-        Float max = 0f;
+        float max = 0f;
         for (Map.Entry<String, Float> entry: nvResults.entrySet()){
             text += entry.getKey() + ": " + (entry.getValue() * 100) + "% ";
         }
@@ -115,7 +115,14 @@ public class ResultActivity extends AppCompatActivity {
                 }
             }
             max *= 100;
-            text += condition + " with " + max.toString() + "% confidence.\n";
+            text += condition + " with " + max + "% confidence.\n";
+            text += "The other possible conditions are: \n";
+            for (Map.Entry<String, Float> entry: cancerResults.entrySet()) {
+                if (entry.getKey().equals(condition)) {
+                    continue;
+                }
+                text += entry.getKey() + " with " + (entry.getValue() * 100) + "% confidence.\n";
+            }
         }
         else {
             text += "Since your Melanocytic Nevi confidence was high, your skin" +
@@ -134,22 +141,22 @@ public class ResultActivity extends AppCompatActivity {
         if (cancerResults == null){
             infoView.setText(R.string.Melanocytic);
         }
-        if (condition == "Actinic keratoses"){
+        if (condition.equals("Actinic keratoses")){
             infoView.setText(R.string.Keratosis);
         }
-        if (condition == "Basal cell carcinoma"){
+        if (condition.equals("Basal cell carcinoma")){
             infoView.setText(R.string.BasalCell);
         }
-        if (condition == "Benign keratosis-like lesions"){
+        if (condition.equals("Benign keratosis-like lesions")){
             infoView.setText(R.string.Seborrheic);
         }
-        if (condition == "Dermatofibroma"){
+        if (condition.equals("Dermatofibroma")){
             infoView.setText(R.string.Dermatofibroma);
         }
-        if (condition == "Melanoma"){
+        if (condition.equals("Melanoma")){
             infoView.setText(R.string.Melanoma);
         }
-        if (condition == "Vascular lesions"){
+        if (condition.equals("Vascular lesions")){
             infoView.setText(R.string.Pyogenic);
         }
         infoView.setLayoutParams(lp);
@@ -160,7 +167,7 @@ public class ResultActivity extends AppCompatActivity {
 
         ll.addView(iv);
         ll.addView(classifierResult);
-        ll.addView(infoView);
+//        ll.addView(infoView);
     }
 
     public void MainMenu(View v){
