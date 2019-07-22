@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        >
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:stretchColumns="*">
 
-            <TableRow
-                android:layout_marginTop="10dp"
+            <TableRow android:background="#90CAF9"
                 >
-                <RelativeLayout android:layout_width="match_parent">
+
+                <RelativeLayout android:layout_height="55dp">
+
                     <ImageButton
-                        android:id="@+id/about_button"
+                        android:id="@+id/about_butfton"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_alignParentLeft="true"
                         android:background="@null"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
                         android:backgroundTint="@android:color/transparent"
                         android:onClick="mainGotoAbout"
                         android:scaleType="fitCenter"
@@ -35,16 +40,48 @@
                         android:id="@+id/download"
                         android:layout_width="46dp"
                         android:layout_height="35dp"
+                        android:layout_marginTop="10dp"
                         android:layout_alignParentRight="true"
                         android:background="@null"
+                        android:layout_marginRight="10dp"
                         android:onClick="accessReceive"
                         android:scaleType="fitCenter"
                         android:src="@drawable/download_button"
                         android:textSize="30px" />
                 </RelativeLayout>
             </TableRow>
+        </TableLayout>
 
-            <TableRow android:layout_marginTop="40dp">
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginTop="30dp"
+
+
+    >
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow android:layout_marginTop="100dp">
+
+                <RelativeLayout android:layout_width="match_parent">
+
+
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow>
 
                 <ImageButton
                     android:id="@+id/camera_icon"
@@ -67,10 +104,11 @@
                     android:scaleType="fitCenter"
                     android:text="@string/camera"
                     android:textColor="@color/orange"
-                    android:textSize="12sp" />
+                    android:textSize="9dp" />
             </TableRow>
 
-            <TableRow  android:layout_marginTop="60dp">
+            <TableRow android:layout_marginTop="60dp">
+
                 <ImageButton
                     android:id="@+id/library_icon"
                     android:layout_width="80dp"
@@ -82,22 +120,24 @@
                     android:text="Library" />
             </TableRow>
 
-            <TableRow  android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="10dp">
+
                 <Button
                     android:id="@+id/library_button"
-                    android:background="@drawable/button_border2"
-                    android:onClick="accessLibrary"
                     android:layout_width="116dp"
                     android:layout_height="50px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_border2"
+                    android:onClick="accessLibrary"
                     android:scaleType="fitCenter"
                     android:src="@drawable/photo_library2"
                     android:text="Choose a photo"
                     android:textColor="@color/teal"
-                    android:textSize="10sp"
-                    android:layout_gravity="center" />
+                    android:textSize="9sp" />
             </TableRow>
 
             <TableRow android:layout_marginTop="60dp">
+
                 <ImageButton
                     android:id="@+id/info_icon"
                     android:layout_width="80dp"
@@ -106,25 +146,29 @@
                     android:backgroundTint="@android:color/transparent"
                     android:onClick="activateInfoPage"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/bookicon"
-                    />
+                    android:src="@drawable/bookicon" />
             </TableRow>
 
-            <TableRow  android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="10dp">
+
                 <Button
                     android:id="@+id/icon_button"
+                    android:layout_width="116dp"
+                    android:layout_height="40px"
+                    android:layout_gravity="center"
                     android:background="@drawable/button_border3"
                     android:onClick="activateInfoPage"
                     android:scaleType="fitCenter"
-                    android:text="About Skin Cancer"
-                    android:textColor="@color/purp"
-                    android:textSize="10sp"
-                    android:layout_width="116dp"
-                    android:layout_height="40px"
-
                     android:src="@drawable/photo_library2"
+                    android:text="About Skin Cancer"
 
-                    android:layout_gravity="center" />
+                    android:textColor="@color/purp"
+
+                    android:textSize="8dp" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="50dp">
+
             </TableRow>
 
 
@@ -132,3 +176,4 @@
 
     </ScrollView>
 </LinearLayout>
+</RelativeLayout>
