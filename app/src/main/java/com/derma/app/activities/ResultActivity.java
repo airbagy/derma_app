@@ -180,7 +180,6 @@ public class ResultActivity extends AppCompatActivity {
         AlertDialog.Builder builder_1, builder_2;
         Context ctx = this;
 
-
         builder_2 = new AlertDialog.Builder(this);
         builder_2.setTitle("Security Code")
                 .setMessage("xxxxx")
@@ -193,11 +192,11 @@ public class ResultActivity extends AppCompatActivity {
 
                         intent.putExtra(Intent.EXTRA_STREAM, globalUri);
 
-                        //File encryptedFile = new File(resultPath);
-                        //Uri uri  = FileProvider.getUriForFile(ctx, "com.derma.app.fileprovider", encryptedFile);
-                        //intent.setDataAndType(uri, ctx.getContentResolver().getType(uri));
-                        // try to return to this app
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        File encryptedFile = new File(resultPath);
+                        Uri uri  = FileProvider.getUriForFile(ctx, "com.derma.app.fileprovider", encryptedFile);
+                        intent.setDataAndType(uri, ctx.getContentResolver().getType(uri));
+//                         try to return to this app
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(Intent.createChooser(intent, "Choose a platform:"));
                     }
@@ -245,7 +244,6 @@ public class ResultActivity extends AppCompatActivity {
             }
         });
         dialog_1.show();
-
     }
 
     private File createImageFile() throws IOException {
@@ -394,7 +392,6 @@ public class ResultActivity extends AppCompatActivity {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
 
     private File createEncodedFile() throws IOException {
