@@ -22,28 +22,6 @@
             android:textColor="@color/black"/>
 
         <EditText
-            android:id="@+id/recv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:textColor="@color/black"/>
-
-        <EditText
-            android:id="@+id/recv_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColor="@color/black"/>
-
-        <EditText
-            android:id="@+id/recv_subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Subject"
-            android:textColor="@color/black"/>
-
-        <EditText
             android:id="@+id/recv_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,10 +37,9 @@
             android:background="@drawable/round_btn"
             android:text="Receive" />
 
-        <TextView
+        <ImageView
             android:id="@+id/recv_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No result" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     </LinearLayout>
 </RelativeLayout>

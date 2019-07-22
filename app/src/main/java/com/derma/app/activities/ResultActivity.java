@@ -398,8 +398,8 @@ public class ResultActivity extends AppCompatActivity {
         String storageDirectory;
         File storageDir;
 
-        storageDirectory =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .toString() + "/Derma_Results";
+        storageDirectory =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                .toString() + "/Derma_Encrypted";
         storageDir = new File(storageDirectory);
         if (!storageDir.exists()){
             storageDir.mkdir();
